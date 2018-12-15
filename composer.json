@@ -1,0 +1,21 @@
+{
+  "name": "maksi/request-mapper-lm",
+  "authors": [
+    {
+      "name": "Tetiana Blindaruk",
+      "email": "t.blindaruk@gmail.com"
+    }
+  ],
+  "require": {
+    "illuminate/support": "^5.7",
+    "symfony/validator": "^4.2",
+    "doctrine/annotations": "^1.6",
+    "doctrine/cache": "^1.8",
+    "illuminate/http": "^5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Maksi\\RequestMapperL\\": "src"
+    }
+  }
+}
