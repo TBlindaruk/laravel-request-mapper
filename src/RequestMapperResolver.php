@@ -20,6 +20,11 @@ class RequestMapperResolver
     private const CONFIG_EXCEPTION_STRING = 'request-mapper-l.exception-class';
 
     /**
+     * @var array
+     */
+    private $map;
+
+    /**
      * @var Config
      */
     private $config;
@@ -53,19 +58,38 @@ class RequestMapperResolver
      */
     public function map(array $map): void
     {
+        $this->map = $map;
         foreach ($map as $className => $arguments) {
             $this->container->singleton($className, function () use ($className, $arguments) {
                 return new $className(... $arguments);
             });
-
             $this->container->afterResolving($className, function ($resolved) {
-                $errors = $this->validator->validate($resolved);
-                if ($errors->count() > 0) {
-                    $exception = $this->getExceptionClass();
-                    $exception->setConstraintViolationList($errors);
-                    throw $exception;
-                }
+                $this->applyAfterResolvingValidation($resolved);
             });
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getRegisterClass(): array
+    {
+        return array_keys($this->map ?? []);
+    }
+
+    /**
+     * @param $resolved
+     *
+     * @throws AbstractException
+     * @throws RequestMapperException
+     */
+    public function applyAfterResolvingValidation($resolved): void
+    {
+        $errors = $this->validator->validate($resolved);
+        if ($errors->count() > 0) {
+            $exception = $this->getExceptionClass();
+            $exception->setConstraintViolationList($errors);
+            throw $exception;
         }
     }
 
