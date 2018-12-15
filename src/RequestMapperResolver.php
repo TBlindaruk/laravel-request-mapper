@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace Maksi\RequestMapperL;
 
+use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Container\Container;
+use Maksi\RequestMapperL\Exception\AbstractException;
+use Maksi\RequestMapperL\Exception\RequestMapperException;
+use Symfony\Component\Validator\Exception\LogicException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -13,6 +17,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class RequestMapperResolver
 {
+    private const CONFIG_EXCEPTION_STRING = 'request-mapper-l.exception-class';
+
+    /**
+     * @var Config
+     */
+    private $config;
+
     /**
      * @var Container
      */
@@ -24,17 +35,19 @@ class RequestMapperResolver
     private $validator;
 
     /**
-     * RequestMapper constructor.
+     * RequestMapperResolver constructor.
      *
+     * @param Config             $config
      * @param Container          $container
      * @param ValidatorInterface $validator
      */
-    public function __construct(Container $container, ValidatorInterface $validator)
+    public function __construct(Config $config, Container $container, ValidatorInterface $validator)
     {
+        $this->config = $config;
         $this->container = $container;
         $this->validator = $validator;
     }
-    
+
     /**
      * @param array $map
      */
@@ -44,13 +57,34 @@ class RequestMapperResolver
             $this->container->singleton($className, function () use ($className, $arguments) {
                 return new $className(... $arguments);
             });
-            
-            $this->container->afterResolving($className, function ($resolved){
+
+            $this->container->afterResolving($className, function ($resolved) {
                 $errors = $this->validator->validate($resolved);
-                if($errors->count() > 0){
-                    throw new RequestMapperException($errors);
+                if ($errors->count() > 0) {
+                    $exception = $this->getExceptionClass();
+                    $exception->setConstraintViolationList($errors);
+                    throw $exception;
                 }
             });
         }
+    }
+
+    /**
+     * @return RequestMapperException
+     */
+    protected function getExceptionClass(): AbstractException
+    {
+        $class = new RequestMapperException();
+        $className = $this->config->get(self::CONFIG_EXCEPTION_STRING);
+
+        if ($className) {
+            $class = new $className;
+        }
+
+        if (!$class instanceof AbstractException) {
+            throw  new LogicException('$class should be instance of ' . AbstractException::class);
+        }
+
+        return $class;
     }
 }
