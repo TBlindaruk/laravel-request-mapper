@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace Maksi\RequestMapperL;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Maksi\RequestMapperL\Exception\AbstractException;
+use Maksi\RequestMapperL\Exception\RequestMapperException;
 use Symfony\Component\Validator\ContainerConstraintValidatorFactory;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilder;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\ValidatorBuilder;
  *
  * @package Maksi\RequestMapperL
  */
-abstract class RequestMapperProvider extends ServiceProvider
+class RequestMapperProvider extends ServiceProvider
 {
     /**
      * @return void
@@ -31,9 +32,12 @@ abstract class RequestMapperProvider extends ServiceProvider
     final public function register(): void
     {
         $this->bindValidatorInterface();
-        $this->bindResolver();
+        $this->bindException();
     }
 
+    /**
+     * @return void
+     */
     protected function bindValidatorInterface(): void
     {
         $this->app->singleton(ValidatorInterface::class, function () {
@@ -44,19 +48,11 @@ abstract class RequestMapperProvider extends ServiceProvider
         });
     }
 
-    protected function bindResolver(): void
-    {
-        /** @var RequestMapperResolver $resolver */
-        $resolver = $this->app->make(RequestMapperResolver::class);
-        /** @var Request $request */
-        $request = $this->app->make(Request::class);
-        $resolver->map($this->resolveMap($request));
-    }
-
     /**
-     * @param Request $request
-     *
-     * @return array
+     * @return void
      */
-    abstract protected function resolveMap(Request $request): array;
+    protected function bindException():void
+    {
+        $this->app->bind(AbstractException::class, RequestMapperException::class);
+    }
 }

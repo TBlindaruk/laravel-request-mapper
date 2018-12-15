@@ -11,11 +11,19 @@
     "symfony/validator": "^4.2",
     "doctrine/annotations": "^1.6",
     "doctrine/cache": "^1.8",
-    "illuminate/http": "^5.7"
+    "illuminate/http": "^5.7",
+    "illuminate/contracts": "^5.7"
   },
   "autoload": {
     "psr-4": {
       "Maksi\\RequestMapperL\\": "src"
+    }
+  },
+  "extra": {
+    "laravel":{
+      "providers":[
+        "Maksi\\RequestMapperL\\RequestMapperProvider"
+      ]
     }
   }
 }
