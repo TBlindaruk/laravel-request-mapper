@@ -22,7 +22,7 @@ class RequestMapperResolver
     /**
      * @var array
      */
-    private $map;
+    private $map = [];
 
     /**
      * @var Config
@@ -58,10 +58,14 @@ class RequestMapperResolver
      */
     public function map(array $map): void
     {
-        $this->map = $map;
+        $this->map = array_merge($this->map, $map);
         foreach ($map as $className => $arguments) {
             $this->container->singleton($className, function () use ($className, $arguments) {
-                return new $className(... $arguments);
+                if (!\is_array($arguments)) {
+                    throw new \InvalidArgumentException('$arguments should be array');
+                }
+
+                return new $className($arguments);
             });
             $this->container->afterResolving($className, function ($resolved) {
                 $this->applyAfterResolvingValidation($resolved);
@@ -74,7 +78,7 @@ class RequestMapperResolver
      */
     public function getRegisterClass(): array
     {
-        return array_keys($this->map ?? []);
+        return array_keys($this->map);
     }
 
     /**

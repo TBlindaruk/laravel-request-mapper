@@ -2,11 +2,11 @@
 
 This component allow you to inject DTO object mapped from the Request to the action.
 
-## How to use?
+## 1. How to use?
 
-### Create DTO from the Request
+### 1.1. Create DTO from the Request
 
-#### Easy way (in case if you want to map data from the $request->all())
+#### 1.1.1 Easy way (in case if you want to map data from the $request->all())
 You should extend DataTransferObject.php class and define your rules for mapping and validation. Example:
 
 ```PHP
@@ -51,7 +51,41 @@ final class RoomSearchRequestData extends DataTransferObject
 }
 ```
 
-### Change rendering of the exception
+#### 1.1.2 Configure DTO parameter in the construct via ServiceProvider
+
+```PHP
+<?php
+declare(strict_types = 1);
+
+namespace App\Http;
+
+use Illuminate\Http\Request;
+use Maksi\RequestMapperL\Support\RequestMapperServiceProvider;
+
+/**
+ * Class RequestMapperProvider
+ *
+ * @package App\Http
+ */
+class RequestMapperProvider extends RequestMapperServiceProvider
+{
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    protected function resolveMap(Request $request): array
+    {
+        return [
+            RoomSearchRequestData::class => $request->all(), // RoomSearchRequestData DTO class
+        ];
+    }
+}
+
+```
+
+
+### 1.2. Change rendering of the exception
 
 1. Create Exception which will extend /Exception/AbstractException.php and implement toResponse method
 
@@ -88,7 +122,6 @@ return [
 
 ```
 
-## Todo
+## 1.3. Todo
 - check nested DTO validation
 - contextual binding
-- re-check DTO creating via ServiceProvider define
