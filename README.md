@@ -125,3 +125,4 @@ return [
 ## 1.3. Todo
 - check nested DTO validation
 - contextual binding
+- add integration tests for `change exception`

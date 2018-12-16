@@ -5,7 +5,7 @@ namespace Maksi\RequestMapperL\Support;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Maksi\RequestMapperL\RequestMapperResolver;
+use Maksi\RequestMapperL\Storage;
 
 /**
  * Class RequestMapperServiceProvider
@@ -17,15 +17,18 @@ abstract class RequestMapperServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    final public function register(): void
+    final public function boot(): void
     {
-        $this->bindResolver();
+        $this->bootResolver();
     }
 
-    protected function bindResolver(): void
+    /**
+     * @return void
+     */
+    protected function bootResolver(): void
     {
-        /** @var RequestMapperResolver $resolver */
-        $resolver = $this->app->make(RequestMapperResolver::class);
+        /** @var Storage $resolver */
+        $resolver = $this->app->make(Storage::class);
         /** @var Request $request */
         $request = $this->app->make(Request::class);
         $resolver->map($this->resolveMap($request));
