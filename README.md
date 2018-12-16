@@ -15,7 +15,7 @@ declare(strict_types = 1);
 
 namespace App\Http\RequestData;
 
-use Maksi\RequestMapperL\DataTransferObject;
+use Maksi\RequestMapperL\RequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
