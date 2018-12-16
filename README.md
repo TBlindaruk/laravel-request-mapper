@@ -89,6 +89,6 @@ return [
 ```
 
 ## Todo
+- check nested DTO validation
 - contextual binding
-
-
+- re-check DTO creating via ServiceProvider define
