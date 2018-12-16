@@ -1,17 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL;
+namespace Maksi\RequestMapperL\RequestData;
 
 use BadMethodCallException;
 use ReflectionClass;
 
 /**
- * Class DataTransferObject
+ * Class RequestData
  *
- * @package Maksi\RequestMapperL
+ * @package Maksi\RequestMapperL\RequestData
  */
-abstract class DataTransferObject
+abstract class RequestData
 {
     /**
      * DataTransferObject constructor.

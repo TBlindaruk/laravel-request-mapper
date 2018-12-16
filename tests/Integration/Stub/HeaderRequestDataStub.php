@@ -3,24 +3,24 @@ declare(strict_types = 1);
 
 namespace Tests\Integration\Stub;
 
-use Maksi\RequestMapperL\DataTransferObject;
+use Maksi\RequestMapperL\RequestData\HeaderRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class RequestDataTransferObject
+ * Class HeaderRequestDataStub
  *
- * @package Tests\Integration
+ * @package Tests\Integration\Stub
  */
-class RequestDataTransferObject extends DataTransferObject
+class HeaderRequestDataStub extends HeaderRequestData
 {
     /**
-     * @Assert\Type(type="int")
+     * @Assert\Type(type="array")
      * @Assert\NotBlank()
      */
     private $age;
 
     /**
-     * @var string
+     * @var array
      * @Assert\NotBlank()
      */
     private $title;
@@ -35,17 +35,17 @@ class RequestDataTransferObject extends DataTransferObject
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getTitle(): string
+    public function getTitle(): array
     {
         return $this->title;
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getAge(): int
+    public function getAge(): array
     {
         return $this->age;
     }
