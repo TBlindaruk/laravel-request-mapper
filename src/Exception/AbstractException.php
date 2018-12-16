@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL\Exception;
+namespace Maksi\LaravelRequestMapper\Exception;
 
 use Exception;
 use Illuminate\Contracts\Support\Responsable;

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL;
+namespace Maksi\LaravelRequestMapper;
 
-use Maksi\RequestMapperL\MappingStrategies\StrategyInterface;
-use Maksi\RequestMapperL\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\MappingStrategies\StrategyInterface;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
 
 /**
  * Class StrategiesHandler
  *
- * @package Maksi\RequestMapperL
+ * @package Maksi\LaravelRequestMapper
  */
 class StrategiesHandler
 {

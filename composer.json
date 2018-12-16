@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Maksi\\RequestMapperL\\": "src"
+      "Maksi\\LaravelRequestMapper\\": "src"
     }
   },
   "autoload-dev": {
