@@ -29,6 +29,7 @@ abstract class RequestData
     abstract protected function init(array $data): void;
 
     /**
+     * TODO: Unit tests for this or delete this method
      * @param string $name
      * @param array  $arguments
      *

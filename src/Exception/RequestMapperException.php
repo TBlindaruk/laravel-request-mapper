@@ -29,6 +29,7 @@ class RequestMapperException extends AbstractException
 
         /** @var ConstraintViolation $value */
         foreach ($this->constraintViolationList ?? [] as $value) {
+            // TODO: Add tests for this lines (inside loop)
             $localResult = [];
             $localResult['message'] = $value->getMessage();
             $localResult['property'] = $value->getPropertyPath();

@@ -82,14 +82,9 @@ class RequestMapperProvider extends ServiceProvider
     {
         $this->app->resolving(function ($object) {
             if ($object instanceof RequestData) {
-
-                /** @var StrategiesHandler $handler */
-                $handler = $this->app->make(StrategiesHandler::class);
-                $handler->handle($object);
-
-                /** @var Validator $validator */
-                $validator = $this->app->make(Validator::class);
-                $validator->applyAfterResolvingValidation($object);
+                /** @var Resolver $resolver */
+                $resolver = $this->app->make(Resolver::class);
+                $resolver->resolve($object);
             }
 
             return $object;
