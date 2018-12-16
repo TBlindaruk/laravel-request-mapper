@@ -1,16 +1,16 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL;
+namespace Maksi\LaravelRequestMapper;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Illuminate\Support\ServiceProvider;
-use Maksi\RequestMapperL\Exception\AbstractException;
-use Maksi\RequestMapperL\Exception\RequestMapperException;
-use Maksi\RequestMapperL\MappingStrategies\AllStrategy;
-use Maksi\RequestMapperL\MappingStrategies\HeaderStrategy;
-use Maksi\RequestMapperL\MappingStrategies\JsonStrategy;
-use Maksi\RequestMapperL\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Exception\AbstractException;
+use Maksi\LaravelRequestMapper\Exception\RequestMapperException;
+use Maksi\LaravelRequestMapper\MappingStrategies\AllStrategy;
+use Maksi\LaravelRequestMapper\MappingStrategies\HeaderStrategy;
+use Maksi\LaravelRequestMapper\MappingStrategies\JsonStrategy;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
 use Symfony\Component\Validator\ContainerConstraintValidatorFactory;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilder;

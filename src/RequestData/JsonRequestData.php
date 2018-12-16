@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL\RequestData;
+namespace Maksi\LaravelRequestMapper\RequestData;
 
 /**
  * Class JsonRequestData
  *
- * @package Maksi\RequestMapperL\RequestData
+ * @package Maksi\LaravelRequestMapper\RequestData
  */
 abstract class JsonRequestData extends RequestData
 {

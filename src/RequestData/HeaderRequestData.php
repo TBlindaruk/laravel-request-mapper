@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL\RequestData;
+namespace Maksi\LaravelRequestMapper\RequestData;
 
 /**
  * Class HeaderRequestData
  *
- * @package Maksi\RequestMapperL\RequestData
+ * @package Maksi\LaravelRequestMapper\RequestData
  */
 abstract class HeaderRequestData extends RequestData
 {
