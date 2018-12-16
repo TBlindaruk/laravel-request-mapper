@@ -7,6 +7,10 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Illuminate\Support\ServiceProvider;
 use Maksi\RequestMapperL\Exception\AbstractException;
 use Maksi\RequestMapperL\Exception\RequestMapperException;
+use Maksi\RequestMapperL\MappingStrategies\AllStrategy;
+use Maksi\RequestMapperL\MappingStrategies\HeaderStrategy;
+use Maksi\RequestMapperL\MappingStrategies\JsonStrategy;
+use Maksi\RequestMapperL\RequestData\RequestData;
 use Symfony\Component\Validator\ContainerConstraintValidatorFactory;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilder;
@@ -19,11 +23,16 @@ use Symfony\Component\Validator\ValidatorBuilder;
 class RequestMapperProvider extends ServiceProvider
 {
     /**
-     * @return void
+     * @param StrategiesHandler $strategiesHandler
      */
-    public function boot(): void
+    public function boot(StrategiesHandler $strategiesHandler): void
     {
         AnnotationRegistry::registerLoader('class_exists');
+
+        $strategiesHandler
+            ->addStrategy($this->app->make(AllStrategy::class))
+            ->addStrategy($this->app->make(JsonStrategy::class))
+            ->addStrategy($this->app->make(HeaderStrategy::class));
     }
 
     /**
@@ -31,9 +40,9 @@ class RequestMapperProvider extends ServiceProvider
      */
     final public function register(): void
     {
-        $this->singletonStorage();
         $this->bindValidatorInterface();
         $this->bindException();
+        $this->singletonHandler();
         $this->resolveDataTransferObject();
     }
 
@@ -61,9 +70,9 @@ class RequestMapperProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function singletonStorage(): void
+    protected function singletonHandler(): void
     {
-        $this->app->singleton(Storage::class, Storage::class);
+        $this->app->singleton(StrategiesHandler::class);
     }
 
     /**
@@ -72,11 +81,15 @@ class RequestMapperProvider extends ServiceProvider
     protected function resolveDataTransferObject(): void
     {
         $this->app->resolving(function ($object) {
-            if ($object instanceof DataTransferObject) {
+            if ($object instanceof RequestData) {
 
-                /** @var Resolver $resolving */
-                $resolving = $this->app->make(Resolver::class);
-                $resolving->resolve($object);
+                /** @var StrategiesHandler $handler */
+                $handler = $this->app->make(StrategiesHandler::class);
+                $handler->handle($object);
+
+                /** @var Validator $validator */
+                $validator = $this->app->make(Validator::class);
+                $validator->applyAfterResolvingValidation($object);
             }
 
             return $object;
