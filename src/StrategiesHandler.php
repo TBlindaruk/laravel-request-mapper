@@ -7,6 +7,7 @@ use Maksi\LaravelRequestMapper\MappingStrategies\StrategyInterface;
 use Maksi\LaravelRequestMapper\RequestData\RequestData;
 
 /**
+ * TODO: Added unit tests (?)
  * Class StrategiesHandler
  *
  * @package Maksi\LaravelRequestMapper

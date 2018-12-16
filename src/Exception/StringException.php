@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 /**
  * TODO: rename me
  *
+ * TODO: Unit tests
+ *
  * Class StringException
  *
  * @package Maksi\RequestMapperL\Exception

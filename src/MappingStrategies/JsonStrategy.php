@@ -8,6 +8,7 @@ use Maksi\LaravelRequestMapper\RequestData\RequestData;
 use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
 
 /**
+ * TODO: Unit tests
  * Class JsonStrategy
  *
  * @package Maksi\RequestMapperL\MappingStrategies

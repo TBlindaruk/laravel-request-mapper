@@ -51,6 +51,7 @@ class Validator
         $errors = $this->validator->validate($resolved);
         if ($errors->count() > 0) {
             $exception = $this->getExceptionClass();
+            //TODO: Should be unit test, that this method is called
             $exception->setConstraintViolationList($errors);
             throw $exception;
         }

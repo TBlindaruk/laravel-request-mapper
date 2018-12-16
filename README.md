@@ -134,3 +134,8 @@ return [
 - check nested DTO validation
 - contextual binding
 - add integration tests for `change exception`
+- add tests and documentation for resolving DTO for different actions in diff was (custom strategy with route url detecting)
+- add priority to the strategies
+- how you can get this DTO from the middleware (should it be singleton?)
+- thing about something like substitute binding (inject in some properties in request, and map to the action from them)
+- add possibility to switch validation between `laravel` and `symfony`  
