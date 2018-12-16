@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL\MappingStrategies;
+namespace Maksi\LaravelRequestMapper\MappingStrategies;
 
-use Maksi\RequestMapperL\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
 
 /**
  * Interface StrategyInterface

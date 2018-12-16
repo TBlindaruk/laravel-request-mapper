@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Tests\Integration\Stub;
 
-use Maksi\RequestMapperL\RequestData\HeaderRequestData;
+use Maksi\LaravelRequestMapper\RequestData\HeaderRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

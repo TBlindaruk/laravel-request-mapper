@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Tests\Integration;
 
-use Maksi\RequestMapperL\RequestMapperProvider;
+use Maksi\LaravelRequestMapper\RequestMapperProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**

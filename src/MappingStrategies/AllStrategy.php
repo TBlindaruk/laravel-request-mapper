@@ -1,16 +1,16 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL\MappingStrategies;
+namespace Maksi\LaravelRequestMapper\MappingStrategies;
 
 use Illuminate\Http\Request;
-use Maksi\RequestMapperL\RequestData\AllRequestData;
-use Maksi\RequestMapperL\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\RequestData\AllRequestData;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
 
 /**
  * Class AllStrategy
  *
- * @package Maksi\RequestMapperL\MappingStrategies
+ * @package Maksi\LaravelRequestMapper\MappingStrategies
  */
 class AllStrategy implements StrategyInterface
 {

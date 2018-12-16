@@ -1,18 +1,18 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL;
+namespace Maksi\LaravelRequestMapper;
 
 use Illuminate\Contracts\Config\Repository as Config;
-use Maksi\RequestMapperL\Exception\AbstractException;
-use Maksi\RequestMapperL\Exception\RequestMapperException;
+use Maksi\LaravelRequestMapper\Exception\AbstractException;
+use Maksi\LaravelRequestMapper\Exception\RequestMapperException;
 use Symfony\Component\Validator\Exception\LogicException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class Validator
  *
- * @package Maksi\RequestMapperL
+ * @package Maksi\LaravelRequestMapper
  */
 class Validator
 {

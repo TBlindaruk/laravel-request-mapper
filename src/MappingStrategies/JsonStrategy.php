@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\RequestMapperL\MappingStrategies;
+namespace Maksi\LaravelRequestMapper\MappingStrategies;
 
 use Illuminate\Http\Request;
-use Maksi\RequestMapperL\RequestData\RequestData;
-use Maksi\RequestMapperL\RequestData\JsonRequestData;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
 
 /**
  * Class JsonStrategy
