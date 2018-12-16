@@ -1,5 +1,5 @@
 {
-  "name": "maksi/request-mapper-lm",
+  "name": "maksi/request-mapper-l",
   "authors": [
     {
       "name": "Tetiana Blindaruk",
@@ -7,12 +7,12 @@
     }
   ],
   "require": {
-    "illuminate/support": "^5.7",
-    "symfony/validator": "^4.2",
+    "illuminate/support": "^5.5",
+    "symfony/validator": "^4.1",
     "doctrine/annotations": "^1.6",
     "doctrine/cache": "^1.8",
-    "illuminate/http": "^5.7",
-    "illuminate/contracts": "^5.7"
+    "illuminate/http": "^5.5",
+    "illuminate/contracts": "^5.5"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.5",
@@ -34,5 +34,7 @@
         "Maksi\\RequestMapperL\\RequestMapperProvider"
       ]
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
