@@ -4,8 +4,6 @@ declare(strict_types = 1);
 namespace Maksi\RequestMapperL;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Maksi\RequestMapperL\Exception\AbstractException;
 use Maksi\RequestMapperL\Exception\RequestMapperException;
@@ -33,7 +31,7 @@ class RequestMapperProvider extends ServiceProvider
      */
     final public function register(): void
     {
-        $this->singletonResolver();
+        $this->singletonStorage();
         $this->bindValidatorInterface();
         $this->bindException();
         $this->resolveDataTransferObject();
@@ -61,11 +59,11 @@ class RequestMapperProvider extends ServiceProvider
     }
 
     /**
-     *
+     * @return void
      */
-    protected function singletonResolver(): void
+    protected function singletonStorage(): void
     {
-        $this->app->singleton(RequestMapperResolver::class, RequestMapperResolver::class);
+        $this->app->singleton(Storage::class, Storage::class);
     }
 
     /**
@@ -73,20 +71,12 @@ class RequestMapperProvider extends ServiceProvider
      */
     protected function resolveDataTransferObject(): void
     {
-        $this->app->resolving(function ($object, Container $container) {
+        $this->app->resolving(function ($object) {
             if ($object instanceof DataTransferObject) {
 
-                /** @var RequestMapperResolver $resolver */
-                $resolver = $this->app->make(RequestMapperResolver::class);
-                $registererClass = $resolver->getRegisterClass();
-
-                if (!\in_array(\get_class($object), $registererClass, true)) {
-                    /** @var Request $request */
-                    $request = $container->make(Request::class);
-
-                    $object->__construct($request->all());
-                    $resolver->applyAfterResolvingValidation($object);
-                }
+                /** @var Resolver $resolving */
+                $resolving = $this->app->make(Resolver::class);
+                $resolving->resolve($object);
             }
 
             return $object;
