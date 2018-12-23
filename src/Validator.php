@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class Validator
 {
-    private const CONFIG_EXCEPTION_STRING = 'request-mapper-l.exception-class';
+    private const CONFIG_EXCEPTION_STRING = 'laravel-request-mapper.exception-class';
 
     /**
      * @var Config
