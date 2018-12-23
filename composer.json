@@ -32,7 +32,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Maksi\\RequestMapperL\\RequestMapperProvider"
+        "Maksi\\LaravelRequestMapper\\RequestMapperProvider"
       ]
     }
   },
