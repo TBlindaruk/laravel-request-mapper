@@ -10,48 +10,36 @@
 
 This component allow you to inject DTO object mapped from the Request to the action.
 
-## 1. How to use?
+1. [Basic usage](#basic)
+2. [Mapped strategies](#mapped-strategies)
+3. [Create custom mapped strategy](#custom-mapped-strategy)
+4. [How to create an custom exception?](#change-exception)
+5. [TODO](#todo)
 
-### 1.1. Create DTO from the Request
+<a name="basic"> <h2>1. Basic usage </h2> </a>
 
-#### 1.1.1 Easy way (in case if you want to map data from the $request->all())
-You should extend DataTransferObject.php class and define your rules for mapping and validation. Example:
+<strong>1.1 Create an DTO object</strong>
 
 ```PHP
 <?php
 declare(strict_types = 1);
 
-namespace App\Http\RequestData;
-
-use Maksi\RequestMapperL\RequestData;
+use Maksi\LaravelRequestMapper\RequestData\AllRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Class TeachersGetRequestData
- *
- * @package App\Http\RequestData
- */
-final class RoomSearchRequestData extends DataTransferObject
+final class RoomSearchRequestData extends AllRequestData
 {
     /**
-     * @var string
-     *
-     * @Assert\NotBlank() 
+     * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */
-    private $name; // symfony validation rules append to this
-
-    /**
-     * @param array $data it is data from the $request->all();
-     */
-    public function init(array $data): void
+    private $name; //apply symfony validation for the property
+ 
+    protected function init(array $data): void // $data from the request
     {
         $this->name = $data['name'] ?? null;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -59,41 +47,44 @@ final class RoomSearchRequestData extends DataTransferObject
 }
 ```
 
-#### 1.1.2 Configure DTO parameter in the construct via ServiceProvider
+Your DTO object should extend one of RequestData classes:
+ - [AllRequestData](./src/RequestData/AllRequestData.php)
+ - [HeaderRequestData](./src/RequestData/HeaderRequestData.php)
+ - [JsonRequestData](./src/RequestData/JsonRequestData.php)
+
+RequestData classes responsible for [mapped strategies](#mapped-strategies). 
+
+You can add validation to the DTO via [`symfony/validator` component](https://symfony.com/doc/current/validation.html).
+
+`$data` array in the `init` it is an `array` from the `$request` object.
+
+<strong>1.2 Inject to the action</strong>
+
+DTO object can be injected to any type of action, this object will be automatically validated by the `sumfony/validator` component, in case if validation are failed, than application will throw [RequestMapperException](./src/Exception/RequestMapperException.php). Exception instance can be changed (for more information please see section [How to create an custom exception](#change-exception))
 
 ```PHP
 <?php
 declare(strict_types = 1);
 
-namespace App\Http;
-
-use Illuminate\Http\Request;
-use Maksi\RequestMapperL\Support\RequestMapperServiceProvider;
-
 /**
- * Class RequestMapperProvider
- *
- * @package App\Http
+ * @package App\Http\Controller
  */
-class RequestMapperProvider extends RequestMapperServiceProvider
+class RoomSearchController
 {
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    protected function resolveMap(Request $request): array
+ ...
+    public function __invoke(RoomSearchRequestData $payload) // DTO object injected
     {
-        return [
-            RoomSearchRequestData::class => $request->all(), // RoomSearchRequestData DTO class
-        ];
+        
     }
 }
 
 ```
 
+<a name="mapped-strategies"> <h2>2.  Mapped strategies </h2> </a>
 
-### 1.2. Change rendering of the exception
+<a name="custom-mapped-strategy"> <h2>3.  Create custom mapped strategy </h2> </a>
+
+<a name="change-exception"> <h2>4. Change validation exception </h2> </a>
 
 1. Create Exception which will extend /Exception/AbstractException.php and implement toResponse method
 
@@ -130,12 +121,14 @@ return [
 
 ```
 
-## 1.3. Todo
+<a name="todo"> <h2>5. TODO </h2> </a>
+
 - check nested DTO validation
+- change default exception to exception witch can not be implement the Responsable interface  
 - contextual binding
 - add integration tests for `change exception`
 - add tests and documentation for resolving DTO for different actions in diff was (custom strategy with route url detecting)
 - add priority to the strategies
 - how you can get this DTO from the middleware (should it be singleton?)
 - thing about something like substitute binding (inject in some properties in request, and map to the action from them)
-- add possibility to switch validation between `laravel` and `symfony`  
+- add possibility to switch validation between `laravel` and `symfony`
