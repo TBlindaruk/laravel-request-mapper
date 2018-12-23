@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\MappingStrategies;
 
+use Illuminate\Http\Request;
 use Maksi\LaravelRequestMapper\RequestData\RequestData;
 
 /**
@@ -13,16 +14,17 @@ use Maksi\LaravelRequestMapper\RequestData\RequestData;
 interface StrategyInterface
 {
     /**
-     * @param RequestData $object
+     * @param Request $request
      *
      * @return array
      */
-    public function resolve(RequestData $object): array ;
+    public function resolve(Request $request): array;
 
     /**
+     * @param Request     $request
      * @param RequestData $object
      *
      * @return bool
      */
-    public function support(RequestData $object): bool;
+    public function support(Request $request, RequestData $object): bool;
 }
