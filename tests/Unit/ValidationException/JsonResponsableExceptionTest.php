@@ -1,26 +1,27 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit\Exception;
+namespace Tests\Unit\ValidationException;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\Exception\RequestMapperException;
+use Maksi\LaravelRequestMapper\ValidationException\DefaultException;
+use Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class RequestMapperExceptionTest
+ * Class JsonResponsableExceptionTest
  *
- * @package Tests\Unit\Exception
+ * @package Tests\Unit\ValidationException
  */
-class RequestMapperExceptionTest extends TestCase
+class JsonResponsableExceptionTest extends TestCase
 {
     /**
      * @return void
      */
     public function testToResponseWithEmptyError(): void
     {
-        $exception = new RequestMapperException();
+        $exception = new JsonResponsableException();
 
         $response = $exception->toResponse(new Request());
 

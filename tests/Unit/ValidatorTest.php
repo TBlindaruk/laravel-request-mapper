@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Unit;
 
 use Illuminate\Contracts\Config\Repository;
-use Maksi\LaravelRequestMapper\Exception\StringException;
+use Maksi\LaravelRequestMapper\ValidationException\StringResponsableException;
 use Maksi\LaravelRequestMapper\Validator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -60,8 +60,7 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * @throws \Maksi\LaravelRequestMapper\Exception\AbstractException
-     * @throws \Maksi\LaravelRequestMapper\Exception\RequestMapperException
+     * @throws \Maksi\LaravelRequestMapper\ValidationException\AbstractException
      */
     public function testApplyAfterResolvingValidation(): void
     {
@@ -73,9 +72,8 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * @expectedException \Maksi\LaravelRequestMapper\Exception\RequestMapperException
-     * @throws \Maksi\LaravelRequestMapper\Exception\AbstractException
-     * @throws \Maksi\LaravelRequestMapper\Exception\RequestMapperException
+     * @expectedException \Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException
+     * @throws \Maksi\LaravelRequestMapper\ValidationException\AbstractException
      */
     public function testDefaultErrorApplyAfterResolvingValidation(): void
     {
@@ -89,8 +87,7 @@ class ValidatorTest extends TestCase
     /**
      * @expectedException \LogicException
      * @expectedExceptionMessage $class should be instance of
-     * @throws \Maksi\LaravelRequestMapper\Exception\AbstractException
-     * @throws \Maksi\LaravelRequestMapper\Exception\RequestMapperException
+     * @throws \Maksi\LaravelRequestMapper\ValidationException\AbstractException
      */
     public function testLogicExceptionApplyAfterResolvingValidation(): void
     {
@@ -103,13 +100,12 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * @expectedException \Maksi\LaravelRequestMapper\Exception\StringException
-     * @throws \Maksi\LaravelRequestMapper\Exception\AbstractException
-     * @throws \Maksi\LaravelRequestMapper\Exception\RequestMapperException
+     * @expectedException \Maksi\LaravelRequestMapper\ValidationException\StringResponsableException
+     * @throws \Maksi\LaravelRequestMapper\ValidationException\AbstractException
      */
     public function testCustomExceptionApplyAfterResolvingValidation(): void
     {
-        $this->config->expects($this->once())->method('get')->willReturn(StringException::class);
+        $this->config->expects($this->once())->method('get')->willReturn(StringResponsableException::class);
         $this->errorList->expects($this->once())->method('count')->willReturn(1);
         $this->symfonyValidator->expects($this->once())->method('validate')->willReturn($this->errorList);
 

@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper;
 
 use Illuminate\Contracts\Config\Repository as Config;
-use Maksi\LaravelRequestMapper\Exception\AbstractException;
-use Maksi\LaravelRequestMapper\Exception\RequestMapperException;
+use Maksi\LaravelRequestMapper\ValidationException\AbstractException;
+use Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException;
 use Symfony\Component\Validator\Exception\LogicException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -44,7 +44,6 @@ class Validator
      * @param $resolved
      *
      * @throws AbstractException
-     * @throws RequestMapperException
      */
     public function applyAfterResolvingValidation($resolved): void
     {
@@ -58,11 +57,11 @@ class Validator
     }
 
     /**
-     * @return RequestMapperException
+     * @return AbstractException
      */
     protected function getExceptionClass(): AbstractException
     {
-        $class = new RequestMapperException();
+        $class = new JsonResponsableException();
         $className = $this->config->get(self::CONFIG_EXCEPTION_STRING);
 
         if ($className) {

@@ -1,23 +1,20 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Exception;
+namespace Maksi\LaravelRequestMapper\ValidationException;
 
 use Exception;
-use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
- * TODO: rename me
- *
  * Class AbstractException
  *
- * @package Maksi\RequestMapperL\Exception
+ * @package Maksi\LaravelRequestMapper\ValidationException
  */
-abstract class AbstractException extends Exception implements Responsable
+abstract class AbstractException extends Exception
 {
     /**
-     * @var ConstraintViolationListInterface
+     * @var ConstraintViolationListInterface|null
      */
     protected $constraintViolationList;
 
@@ -27,5 +24,13 @@ abstract class AbstractException extends Exception implements Responsable
     final public function setConstraintViolationList(ConstraintViolationListInterface $constraintViolationList): void
     {
         $this->constraintViolationList = $constraintViolationList;
+    }
+
+    /**
+     * @return null|ConstraintViolationListInterface
+     */
+    final public function getConstraintViolationList(): ?ConstraintViolationListInterface
+    {
+        return $this->constraintViolationList;
     }
 }

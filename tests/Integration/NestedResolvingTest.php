@@ -28,7 +28,7 @@ class NestedResolvingTest extends TestCase
     }
 
     /**
-     * @expectedException \Maksi\LaravelRequestMapper\Exception\RequestMapperException
+     * @expectedException \Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException
      */
     public function testInvalidNestedRequestData(): void
     {
