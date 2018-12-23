@@ -5,8 +5,6 @@ namespace Maksi\LaravelRequestMapper;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Illuminate\Support\ServiceProvider;
-use Maksi\LaravelRequestMapper\Exception\AbstractException;
-use Maksi\LaravelRequestMapper\Exception\RequestMapperException;
 use Maksi\LaravelRequestMapper\MappingStrategies\AllStrategy;
 use Maksi\LaravelRequestMapper\MappingStrategies\HeaderStrategy;
 use Maksi\LaravelRequestMapper\MappingStrategies\JsonStrategy;
@@ -41,7 +39,6 @@ class RequestMapperProvider extends ServiceProvider
     final public function register(): void
     {
         $this->bindValidatorInterface();
-        $this->bindException();
         $this->singletonHandler();
         $this->resolveDataTransferObject();
     }
@@ -57,14 +54,6 @@ class RequestMapperProvider extends ServiceProvider
                 ->enableAnnotationMapping()
                 ->getValidator();
         });
-    }
-
-    /**
-     * @return void
-     */
-    protected function bindException(): void
-    {
-        $this->app->bind(AbstractException::class, RequestMapperException::class);
     }
 
     /**

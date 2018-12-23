@@ -73,7 +73,7 @@ You can add validation to the DTO via [`symfony/validator` component](https://sy
 
 <strong>2.2 Inject to the action</strong>
 
-DTO object can be injected to any type of action, this object will be automatically validated by the `sumfony/validator` component, in case if validation are failed, than application will throw [RequestMapperException](./src/Exception/RequestMapperException.php). Exception instance can be changed (for more information please see section [How to create an custom exception](#change-exception))
+DTO object can be injected to any type of action, this object will be automatically validated by the `sumfony/validator` component, in case if validation are failed, than application will throw [JsonResponsableException](src/ValidationException/JsonResponsableException.php). Exception instance can be changed (for more information please see section [How to create an custom exception](#change-exception))
 
 ```PHP
 <?php
@@ -188,7 +188,8 @@ For example:
 ```PHP
 <?php
 
-class StringException extends AbstractException
+class StringException extends \Maksi\LaravelRequestMapper\ValidationException\AbstractException
+                                implements \Illuminate\Contracts\Support\Responsable
 {
     /**
      * Create an HTTP response that represents the object.
@@ -199,7 +200,8 @@ class StringException extends AbstractException
      */
     public function toResponse($request)
     {
-        return JsonResponse::create('Invalid data provided')->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+        return \Illuminate\Http\JsonResponse::create('Invalid data provided')
+                            ->setStatusCode(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
 ```
@@ -211,20 +213,19 @@ class StringException extends AbstractException
 declare(strict_types = 1);
 
 return [
-    'exception-class' => \Maksi\LaravelRequestMapper\Exception\StringException::class,
+    'exception-class' => \Maksi\LaravelRequestMapper\ValidationException\DefaultException::class,
 ];
 
 ```
 
 <a name="todo"> <h2>7. TODO </h2> </a>
 
-- should add possibility to publish `config` (`readme.md` + `code`)
-- change default exception to exception witch can not be implement the Responsable interface  
-- contextual binding
-- add integration tests for `change exception`
-- add tests and documentation for resolving DTO for different actions in diff was (custom strategy with route url detecting)
-- add priority to the strategies
-- how you can get this DTO from the middleware (should it be singleton?)
-- thing about something like substitute binding (inject in some properties in request, and map to the action from them)
-- add possibility to switch validation between `laravel` and `symfony`
-- add codecov separate for `unit` and `integration` tests
+- [ ] should add possibility to publish `config` (`readme.md` + `code`)
+- [ ] contextual binding
+- [ ] add integration tests for `change exception`
+- [ ] add tests and documentation for resolving DTO for different actions in diff was (custom strategy with route url detecting)
+- [ ] add priority to the strategies
+- [ ] how you can get this DTO from the middleware (should it be singleton?)
+- [ ] thing about something like substitute binding (inject in some properties in request, and map to the action from them)
+- [ ] add possibility to switch validation between `laravel` and `symfony`
+- [ ] add codecov separate for `unit` and `integration` tests

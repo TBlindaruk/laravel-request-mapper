@@ -39,8 +39,7 @@ class Resolver
     /**
      * @param RequestData $data
      *
-     * @throws Exception\AbstractException
-     * @throws Exception\RequestMapperException
+     * @throws ValidationException\AbstractException
      */
     public function resolve(RequestData $data): void
     {

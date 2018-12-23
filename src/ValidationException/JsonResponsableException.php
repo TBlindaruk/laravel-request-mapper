@@ -1,20 +1,19 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Exception;
+namespace Maksi\LaravelRequestMapper\ValidationException;
 
+use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\Validator\ConstraintViolation;
 
 /**
- * TODO: rename me
+ * Class JsonResponsableException
  *
- * Class RequestMapperAbstractException
- *
- * @package Maksi\RequestMapperL\Exception
+ * @package Maksi\LaravelRequestMapper\ValidationException
  */
-class RequestMapperException extends AbstractException
+class JsonResponsableException extends AbstractException implements Responsable
 {
     /**
      * Create an HTTP response that represents the object.
