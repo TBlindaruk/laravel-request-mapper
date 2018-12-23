@@ -10,15 +10,27 @@
 
 This component allow you to inject DTO object mapped from the Request to the action.
 
-1. [Basic usage](#basic)
-2. [Mapped strategies](#mapped-strategies)
-3. [Create custom mapped strategy](#custom-mapped-strategy)
-4. [How to create an custom exception?](#change-exception)
-5. [TODO](#todo)
+1. [Install](#install)
+2. [Basic usage](#basic)
+3. [Mapped strategies](#mapped-strategies)
+4. [Create custom mapped strategy](#custom-mapped-strategy)
+5. [How to create an custom exception?](#change-exception)
+6. [TODO](#todo)
 
-<a name="basic"> <h2>1. Basic usage </h2> </a>
+<a name="install"> <h2>1. Install </h2> </a>
 
-<strong>1.1 Create an DTO object</strong>
+You can install this package via composer using this command:
+
+```
+composer require maksi/laravel-request-mapper
+```
+
+The package will automatically register itself.
+
+
+<a name="basic"> <h2>2. Basic usage </h2> </a>
+
+<strong>2.1 Create an DTO object</strong>
 
 ```PHP
 <?php
@@ -58,7 +70,7 @@ You can add validation to the DTO via [`symfony/validator` component](https://sy
 
 `$data` array in the `init` it is an `array` from the `$request` object.
 
-<strong>1.2 Inject to the action</strong>
+<strong>2.2 Inject to the action</strong>
 
 DTO object can be injected to any type of action, this object will be automatically validated by the `sumfony/validator` component, in case if validation are failed, than application will throw [RequestMapperException](./src/Exception/RequestMapperException.php). Exception instance can be changed (for more information please see section [How to create an custom exception](#change-exception))
 
@@ -80,11 +92,11 @@ class RoomSearchController
 
 ```
 
-<a name="mapped-strategies"> <h2>2.  Mapped strategies </h2> </a>
+<a name="mapped-strategies"> <h2>3.  Mapped strategies </h2> </a>
 
-<a name="custom-mapped-strategy"> <h2>3.  Create custom mapped strategy </h2> </a>
+<a name="custom-mapped-strategy"> <h2>4.  Create custom mapped strategy </h2> </a>
 
-<a name="change-exception"> <h2>4. Change validation exception </h2> </a>
+<a name="change-exception"> <h2>5. Change validation exception </h2> </a>
 
 1. Create Exception which will extend /Exception/AbstractException.php and implement toResponse method
 
@@ -121,9 +133,10 @@ return [
 
 ```
 
-<a name="todo"> <h2>5. TODO </h2> </a>
+<a name="todo"> <h2>6. TODO </h2> </a>
 
 - check nested DTO validation
+- should add possibility to publish `config` (`readme.md` + `code`)
 - change default exception to exception witch can not be implement the Responsable interface  
 - contextual binding
 - add integration tests for `change exception`
