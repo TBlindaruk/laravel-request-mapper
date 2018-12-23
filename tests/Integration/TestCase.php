@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Integration;
+namespace Maksi\LaravelRequestMapper\Tests\Integration;
 
 use Maksi\LaravelRequestMapper\RequestMapperProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 /**
  * Class AutoDispatchingTest
  *
- * @package Tests\Integration
+ * @package Maksi\LaravelRequestMapper\Tests\Integration
  */
 class TestCase extends BaseTestCase
 {

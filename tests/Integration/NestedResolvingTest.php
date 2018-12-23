@@ -1,15 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Integration;
+namespace Maksi\LaravelRequestMapper\Tests\Integration;
 
 use Illuminate\Http\Request;
-use Tests\Integration\Stub\NestedRequestData\RootRequestDataStub;
+use Maksi\LaravelRequestMapper\Tests\Integration\Stub\NestedRequestData\RootRequestDataStub;
 
 /**
  * Class NestedResolvingTest
  *
- * @package Tests\Integration
+ * @package Maksi\LaravelRequestMapper\Tests\Integration
  */
 class NestedResolvingTest extends TestCase
 {

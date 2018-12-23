@@ -1,17 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit;
+namespace Maksi\LaravelRequestMapper\Tests\Unit;
 
 use Illuminate\Http\Request;
 use Maksi\LaravelRequestMapper\StrategiesHandler;
-use Tests\Integration\Stub\JsonRequestDataStub;
-use Tests\Integration\TestCase;
+use Maksi\LaravelRequestMapper\Tests\Integration\Stub\JsonRequestDataStub;
+use Maksi\LaravelRequestMapper\Tests\Integration\TestCase;
 
 /**
  * Class StrategiesHandlerTest
  *
- * @package Tests\Unit
+ * @package Maksi\LaravelRequestMapper\Tests\Unit
  */
 class StrategiesHandlerTest extends TestCase
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit\Stub;
+namespace Maksi\LaravelRequestMapper\Tests\Unit\Stub;
 
 use Maksi\LaravelRequestMapper\RequestData\AllRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class AllRequestDataStub
  *
- * @package Tests\Unit\Stub
+ * @package Maksi\LaravelRequestMapper\Tests\Unit\Stub
  */
 class AllRequestDataStub extends AllRequestData
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Integration\Stub;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub;
 
 use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class JsonRequestDataStub
  *
- * @package Tests\Integration\Stub
+ * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub
  */
 class JsonRequestDataStub extends JsonRequestData
 {

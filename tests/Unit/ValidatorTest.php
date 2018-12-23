@@ -1,21 +1,21 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit;
+namespace Maksi\LaravelRequestMapper\Tests\Unit;
 
 use Illuminate\Contracts\Config\Repository;
+use Maksi\LaravelRequestMapper\Tests\Unit\Stub\AllRequestDataStub;
 use Maksi\LaravelRequestMapper\ValidationException\StringResponsableException;
 use Maksi\LaravelRequestMapper\Validator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Tests\Unit\Stub\AllRequestDataStub;
 
 /**
  * Class ValidatorTest
  *
- * @package Tests\Unit
+ * @package Maksi\LaravelRequestMapper\Tests\Unit
  */
 class ValidatorTest extends TestCase
 {

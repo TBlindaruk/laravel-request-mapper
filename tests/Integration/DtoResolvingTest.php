@@ -1,17 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Integration;
+namespace Maksi\LaravelRequestMapper\Tests\Integration;
 
 use Illuminate\Http\Request;
-use Tests\Integration\Stub\JsonRequestDataStub;
-use Tests\Integration\Stub\AllRequestDataStub;
-use Tests\Integration\Stub\HeaderRequestDataStub;
+use Maksi\LaravelRequestMapper\Tests\Integration\Stub\AllRequestDataStub;
+use Maksi\LaravelRequestMapper\Tests\Integration\Stub\HeaderRequestDataStub;
+use Maksi\LaravelRequestMapper\Tests\Integration\Stub\JsonRequestDataStub;
 
 /**
  * Class DtoResolvingTest
  *
- * @package Tests\Integration
+ * @package Maksi\LaravelRequestMapper\Tests\Integration
  */
 class DtoResolvingTest extends TestCase
 {
