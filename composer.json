@@ -6,6 +6,7 @@
       "email": "t.blindaruk@gmail.com"
     }
   ],
+  "license": "MIT",
   "require": {
     "illuminate/support": "^5.5",
     "symfony/validator": "^4.1",
