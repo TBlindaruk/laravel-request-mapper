@@ -1,0 +1,51 @@
+<?php
+declare(strict_types = 1);
+
+namespace Tests\Integration\Stub\NestedRequestData;
+
+use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Class RootRequestDataStub
+ *
+ * @package Tests\Integration\Stub\NestedRequestData
+ */
+class RootRequestDataStub extends JsonRequestData
+{
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
+    private $title;
+
+    /**
+     * @Assert\Valid()
+     */
+    private $nested;
+
+    /**
+     * @param array $data
+     */
+    protected function init(array $data): void
+    {
+        $this->title = $data['title'] ?? null;
+        $this->nested = new NestedRequestDataStub($data['nested'] ?? []);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return NestedRequestDataStub
+     */
+    public function getNested(): NestedRequestDataStub
+    {
+        return $this->nested;
+    }
+}

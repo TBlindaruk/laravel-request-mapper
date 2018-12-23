@@ -12,10 +12,11 @@ This component allow you to inject DTO object mapped from the Request to the act
 
 1. [Install](#install)
 2. [Basic usage](#basic)
-3. [Mapped strategies](#mapped-strategies)
-4. [Create custom mapped strategy](#custom-mapped-strategy)
-5. [How to create an custom exception?](#change-exception)
-6. [TODO](#todo)
+3. [Nested object](#nested)
+4. [Mapped strategies](#mapped-strategies)
+5. [Create custom mapped strategy](#custom-mapped-strategy)
+6. [How to create an custom exception?](#change-exception)
+7. [TODO](#todo)
 
 <a name="install"> <h2>1. Install </h2> </a>
 
@@ -91,12 +92,94 @@ class RoomSearchController
 }
 
 ```
+<a name="nested"> <h2>3.  Nested object </h2> </a>
 
-<a name="mapped-strategies"> <h2>3.  Mapped strategies </h2> </a>
+In the same way you can create an nested DTO object, <strong> for example: </strong>
 
-<a name="custom-mapped-strategy"> <h2>4.  Create custom mapped strategy </h2> </a>
+<p align="center"><i>Root class</i></p>
 
-<a name="change-exception"> <h2>5. Change validation exception </h2> </a>
+```PHP
+<?php
+declare(strict_types = 1);
+
+namespace Tests\Integration\Stub\NestedRequestData;
+
+use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
+use Symfony\Component\Validator\Constraints as Assert;
+
+class RootRequestDataStub extends JsonRequestData
+{
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
+    private $title;
+
+    /**
+     * @Assert\Valid()
+     */
+    private $nested; // this property should have `Valid` annotation for validate nested object
+
+    /**
+     * @param array $data
+     */
+    protected function init(array $data): void
+    {
+        $this->title = $data['title'] ?? null;
+        $this->nested = new NestedRequestDataStub($data['nested'] ?? []);
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getNested(): NestedRequestDataStub
+    {
+        return $this->nested;
+    }
+}
+
+```
+
+<p align="center"><i>Nested class</i></p>
+
+```PHP
+<?php
+declare(strict_types = 1);
+
+namespace Tests\Integration\Stub\NestedRequestData;
+
+use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
+use Symfony\Component\Validator\Constraints as Assert;
+
+class NestedRequestDataStub extends JsonRequestData
+{
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
+    private $nestedTitle;
+
+    protected function init(array $data): void
+    {
+        $this->nestedTitle = $data['title'] ?? null;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->nestedTitle;
+    }
+}
+
+```
+
+
+<a name="mapped-strategies"> <h2>4.  Mapped strategies </h2> </a>
+
+<a name="custom-mapped-strategy"> <h2>5.  Create custom mapped strategy </h2> </a>
+
+<a name="change-exception"> <h2>6. Change validation exception </h2> </a>
 
 1. Create Exception which will extend /Exception/AbstractException.php and implement toResponse method
 
@@ -133,9 +216,8 @@ return [
 
 ```
 
-<a name="todo"> <h2>6. TODO </h2> </a>
+<a name="todo"> <h2>7. TODO </h2> </a>
 
-- check nested DTO validation
 - should add possibility to publish `config` (`readme.md` + `code`)
 - change default exception to exception witch can not be implement the Responsable interface  
 - contextual binding
@@ -145,3 +227,4 @@ return [
 - how you can get this DTO from the middleware (should it be singleton?)
 - thing about something like substitute binding (inject in some properties in request, and map to the action from them)
 - add possibility to switch validation between `laravel` and `symfony`
+- add codecov separate for `unit` and `integration` tests
