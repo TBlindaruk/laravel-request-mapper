@@ -118,14 +118,14 @@ class StringException extends AbstractException
 }
 ```
 
-2. Define in config/request-mapper-l.php exception-class key
+2. Define in `config/laravel-request-mapper.php` `exception-class` key
 
 ```PHP
 <?php
 declare(strict_types = 1);
 
 return [
-    'exception-class' => \Maksi\RequestMapperL\Exception\StringException::class,
+    'exception-class' => \Maksi\LaravelRequestMapper\Exception\StringException::class,
 ];
 
 ```
