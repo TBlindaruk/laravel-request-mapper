@@ -16,36 +16,22 @@ use Maksi\LaravelRequestMapper\RequestData\RequestData;
 class AllStrategy implements StrategyInterface
 {
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * AllStrategy constructor.
-     *
      * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * @param RequestData $object
      *
      * @return array
      */
-    public function resolve(RequestData $object): array
+    public function resolve(Request $request): array
     {
-        return $this->request->all();
+        return $request->all();
     }
 
     /**
+     * @param Request     $request
      * @param RequestData $object
      *
      * @return bool
      */
-    public function support(RequestData $object): bool
+    public function support(Request $request, RequestData $object): bool
     {
         return $object instanceof AllRequestData;
     }

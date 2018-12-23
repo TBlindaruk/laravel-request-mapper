@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\MappingStrategies;
 
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
 use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
 
 /**
  * TODO: Unit tests
@@ -16,36 +16,22 @@ use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
 class JsonStrategy implements StrategyInterface
 {
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * JsonAllStrategy constructor.
-     *
      * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * @param RequestData $object
      *
      * @return array
      */
-    public function resolve(RequestData $object): array
+    public function resolve(Request $request): array
     {
-        return $this->request->json()->all();
+        return $request->json()->all();
     }
 
     /**
+     * @param Request     $request
      * @param RequestData $object
      *
      * @return bool
      */
-    public function support(RequestData $object): bool
+    public function support(Request $request, RequestData $object): bool
     {
         return $object instanceof JsonRequestData;
     }

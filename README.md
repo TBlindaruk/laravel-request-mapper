@@ -179,6 +179,121 @@ class NestedRequestDataStub extends JsonRequestData
 
 <a name="custom-mapped-strategy"> <h2>5.  Create custom mapped strategy </h2> </a>
 
+You can create a custom mapped strategies for our application.
+
+<strong>5.1 Create custom strategy </strong>
+
+You strategy should implement [StrategyInterface](./src/MappingStrategies/StrategyInterface.php);
+
+```PHP
+<?php
+declare(strict_types = 1);
+
+namespace App\Http\RequestDataStrategy;
+
+use App\Http\RequestData\TeacherSearchRequestData;
+use Illuminate\Http\Request;
+use Maksi\LaravelRequestMapper\MappingStrategies\StrategyInterface;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
+
+class TeacherSearchStrategy implements StrategyInterface
+{
+    public function resolve(Request $request): array
+    {
+        return $request->all();
+    }
+
+    public function support(Request $request, RequestData $object): bool
+    {
+        return $object instanceof TeacherSearchRequestData
+            && $request->routeIs('teacher-search');
+
+    }
+}
+```
+
+Method `support` define is strategy available for `resolve` object. This method has 2 parameters `$request` and `$object`:
+- `$request` as a `Request` instance
+- <strong>`$object`</strong> - it is empty DTO instance, witch will be filled
+
+Method `resolve` will return the array which will be injected to the DTO instance. This method accept `$request` object.
+
+<strong>5.2 Create RequestData class for Strategy</strong>
+
+[comment]: # (probably this block should be moved to other section)
+
+You can define a custom `RequestData` class which will be handled by strategies. Your class should extend one of the next classes:
+- [AllRequestData](./src/RequestData/AllRequestData.php) - in case if your DTO should be filled for all cases from the `$request->all()`. No custom strategies needed.
+- [HeaderRequestData](./src/RequestData/HeaderRequestData.php) - in case if your DTO should be filled for all cases from the `$request->headers->all()`. No custom strategies needed.
+- [JsonRequestData](./src/RequestData/JsonRequestData.php) - in case if your DTO should be filled for all cases from the `$request->json()->all()`. No custom strategies needed.
+- <strong>[RequestData](./src/RequestData/RequestData.php) - in case if you want to create your own strategy</strong>
+
+
+```PHP
+<?php
+declare(strict_types = 1);
+
+namespace App\Http\RequestData;
+
+use App\Domain\Teacher\Search\TeacherSearchCriteriaInterface;
+use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Symfony\Component\Validator\Constraints as Assert;
+
+final class TeacherSearchRequestData extends RequestData implements TeacherSearchCriteriaInterface
+{
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
+    private $name;
+
+    protected function init(array $data): void
+    {
+        $this->name = $data['name'] ?? null;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+}
+```
+
+<strong>5.3 Register your strategy in the `ServiceProvider` </strong>
+
+You should add instance of your `strategy` to the `Maksi\LaravelRequestMapper\StrategiesHandler` via `addStrategy` method.
+
+```PHP
+<?php
+declare(strict_types = 1);
+
+namespace App\Http\Provider;
+
+use App\Http\RequestDataStrategy\TeacherSearchStrategy;
+use Illuminate\Support\ServiceProvider;
+use Maksi\LaravelRequestMapper\StrategiesHandler;
+
+/**
+ * Class RequestMapperProvider
+ *
+ * @package App\Http\Provider
+ */
+class RequestMapperProvider extends ServiceProvider
+{
+    /**
+     * @param StrategiesHandler $strategiesHandler
+     */
+    public function boot(StrategiesHandler $strategiesHandler): void
+    {
+        $strategiesHandler->addStrategy($this->app->make(TeacherSearchStrategy::class));
+    }
+}
+
+```
+
+
 <a name="change-exception"> <h2>6. Change validation exception </h2> </a>
 
 1. Create Exception which will extend /Exception/AbstractException.php and implement toResponse method
@@ -220,12 +335,9 @@ return [
 
 <a name="todo"> <h2>7. TODO </h2> </a>
 
-- [ ] should add possibility to publish `config` (`readme.md` + `code`)
-- [ ] contextual binding
 - [ ] add integration tests for `change exception`
-- [ ] add tests and documentation for resolving DTO for different actions in diff was (custom strategy with route url detecting)
 - [ ] add priority to the strategies
 - [ ] how you can get this DTO from the middleware (should it be singleton?)
-- [ ] thing about something like substitute binding (inject in some properties in request, and map to the action from them)
 - [ ] add possibility to switch validation between `laravel` and `symfony`
 - [ ] add codecov separate for `unit` and `integration` tests
+- [ ] add ignore export file
