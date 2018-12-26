@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\RequestData;
+namespace Maksi\LaravelRequestMapper\Filling\RequestData;
 
 use BadMethodCallException;
 use ReflectionClass;
@@ -9,7 +9,7 @@ use ReflectionClass;
 /**
  * Class RequestData
  *
- * @package Maksi\LaravelRequestMapper\RequestData
+ * @package Maksi\LaravelRequestMapper\Filling\RequestData
  */
 abstract class RequestData
 {

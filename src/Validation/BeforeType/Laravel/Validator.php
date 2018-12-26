@@ -1,0 +1,104 @@
+<?php
+declare(strict_types = 1);
+
+namespace Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel;
+
+use Illuminate\Contracts\Validation\Factory as ValidationFactory;
+use Illuminate\Validation\ValidationException;
+use Maksi\LaravelRequestMapper\Validation\Annotation\ResolverInterface;
+use Maksi\LaravelRequestMapper\Validation\Data\ErrorCollection;
+use Maksi\LaravelRequestMapper\Validation\Data\ErrorData;
+use Maksi\LaravelRequestMapper\Validation\Data\ValidateData;
+use Maksi\LaravelRequestMapper\Validation\ValidatorInterface;
+
+/**
+ * Class Validator
+ *
+ * @package Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel
+ */
+class Validator implements ValidatorInterface
+{
+    /**
+     * @var ResolverInterface
+     */
+    private $resolver;
+
+    /**
+     * @var ValidationFactory
+     */
+    private $validationFactory;
+
+    /**
+     * @var InputValidationFactory
+     */
+    private $inputValidationFactory;
+
+    /**
+     * LaravelValidationValidator constructor.
+     *
+     * @param ResolverInterface      $resolver
+     * @param ValidationFactory      $validationFactory
+     * @param InputValidationFactory $inputValidationFactory
+     */
+    public function __construct(
+        ResolverInterface $resolver,
+        ValidationFactory $validationFactory,
+        InputValidationFactory $inputValidationFactory
+    ) {
+        $this->resolver = $resolver;
+        $this->validationFactory = $validationFactory;
+        $this->inputValidationFactory = $inputValidationFactory;
+    }
+
+    /**
+     * @param ValidateData $validateData
+     *
+     * @return ErrorCollection
+     */
+    public function validate(ValidateData $validateData): ErrorCollection
+    {
+        $data = $validateData->getFillData();
+
+        $validationClassName = $this->resolver->getLaravelValidationClassName($validateData->getObject());
+        $inputValidation = $this->inputValidationFactory->make($validationClassName);
+
+        $validator = $this->validationFactory->make(
+            $data,
+            $inputValidation->rules(),
+            $inputValidation->messages(),
+            $inputValidation->customAttributes()
+        );
+
+        $errorCollection = new ErrorCollection();
+
+        try {
+            $validator->validate();
+        } catch (ValidationException $validationException) {
+            foreach ($validator->errors()->messages() as $field => $messages) {
+                foreach ($messages as $message) {
+                    $errorCollection->push(new ErrorData($message, $field));
+                }
+            }
+        }
+
+        return $errorCollection;
+    }
+
+    /**
+     * @param ValidateData $validateData
+     *
+     * @return bool
+     */
+    public function support(ValidateData $validateData): bool
+    {
+        $object = $validateData->getObject();
+
+        if ($this->resolver->isNoValidationTypeDetermined($object)) {
+            $validationClass = $this->resolver->getLaravelValidationClassName($object);
+
+            return null !== $validationClass;
+        }
+
+        return $this->resolver->isLaravelValidation($object);
+    }
+}

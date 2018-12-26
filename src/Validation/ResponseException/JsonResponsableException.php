@@ -1,17 +1,16 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\ValidationException;
+namespace Maksi\LaravelRequestMapper\Validation\ResponseException;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Symfony\Component\Validator\ConstraintViolation;
 
 /**
  * Class JsonResponsableException
  *
- * @package Maksi\LaravelRequestMapper\ValidationException
+ * @package Maksi\LaravelRequestMapper\Validation\ResponseException
  */
 class JsonResponsableException extends AbstractException implements Responsable
 {
@@ -26,13 +25,13 @@ class JsonResponsableException extends AbstractException implements Responsable
     {
         $result = [];
 
-        /** @var ConstraintViolation $value */
-        foreach ($this->constraintViolationList ?? [] as $value) {
+        $errors = $this->errorCollection ? $this->errorCollection->all() : [];
+
+        foreach ($errors as $value) {
             // TODO: Add tests for this lines (inside loop)
             $localResult = [];
             $localResult['message'] = $value->getMessage();
-            $localResult['property'] = $value->getPropertyPath();
-            $localResult['given'] = $value->getInvalidValue();
+            $localResult['property'] = $value->getProperty();
 
             $result[] = $localResult;
         }

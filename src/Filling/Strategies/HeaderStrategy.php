@@ -1,18 +1,18 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\MappingStrategies;
+namespace Maksi\LaravelRequestMapper\Filling\Strategies;
 
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\RequestData\HeaderRequestData;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\HeaderRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
 
 /**
  * TODO: Unit tests
  *
  * Class HeaderStrategy
  *
- * @package Maksi\LaravelRequestMapper\MappingStrategies
+ * @package Maksi\LaravelRequestMapper\Filling\Strategies
  */
 class HeaderStrategy implements StrategyInterface
 {

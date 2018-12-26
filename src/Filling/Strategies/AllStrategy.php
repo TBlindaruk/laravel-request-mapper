@@ -1,19 +1,19 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\MappingStrategies;
+namespace Maksi\LaravelRequestMapper\Filling\Strategies;
 
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\AllRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
 
 /**
  * TODO: Unit tests
- * Class JsonStrategy
+ * Class AllStrategy
  *
- * @package Maksi\RequestMapperL\MappingStrategies
+ * @package Maksi\LaravelRequestMapper\Filling\Strategies
  */
-class JsonStrategy implements StrategyInterface
+class AllStrategy implements StrategyInterface
 {
     /**
      * @param Request $request
@@ -22,7 +22,7 @@ class JsonStrategy implements StrategyInterface
      */
     public function resolve(Request $request): array
     {
-        return $request->json()->all();
+        return $request->all();
     }
 
     /**
@@ -33,6 +33,6 @@ class JsonStrategy implements StrategyInterface
      */
     public function support(Request $request, RequestData $object): bool
     {
-        return $object instanceof JsonRequestData;
+        return $object instanceof AllRequestData;
     }
 }

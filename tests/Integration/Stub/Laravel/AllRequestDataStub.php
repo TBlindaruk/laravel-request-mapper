@@ -1,28 +1,21 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Unit\Stub;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub\Laravel;
 
-use Maksi\LaravelRequestMapper\RequestData\AllRequestData;
-use Symfony\Component\Validator\Constraints as Assert;
+use Maksi\LaravelRequestMapper\Filling\RequestData\AllRequestData;
+use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\ClassAnnotation;
 
 /**
  * Class AllRequestDataStub
  *
- * @package Maksi\LaravelRequestMapper\Tests\Unit\Stub
+ * @ClassAnnotation(class="\Maksi\LaravelRequestMapper\Tests\Integration\Stub\Laravel\InputValidator")
+ * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub
  */
 class AllRequestDataStub extends AllRequestData
 {
-    /**
-     * @Assert\Type(type="int")
-     * @Assert\NotBlank()
-     */
     private $age;
 
-    /**
-     * @var string
-     * @Assert\NotBlank()
-     */
     private $title;
 
     /**
