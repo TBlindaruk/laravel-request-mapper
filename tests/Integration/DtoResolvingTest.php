@@ -27,7 +27,7 @@ class DtoResolvingTest extends TestCase
     }
 
     /**
-     * @expectedException \Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException
+     * @expectedException \Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException
      */
     public function testInvalidAllRequestData(): void
     {
@@ -48,7 +48,7 @@ class DtoResolvingTest extends TestCase
     }
 
     /**
-     * @expectedException \Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException
+     * @expectedException \Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException
      */
     public function testInvalidJsonRequestData(): void
     {
@@ -69,7 +69,7 @@ class DtoResolvingTest extends TestCase
     }
 
     /**
-     * @expectedException \Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException
+     * @expectedException \Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException
      */
     public function testInvalidHeaderData(): void
     {

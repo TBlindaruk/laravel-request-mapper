@@ -3,12 +3,14 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub;
 
-use Maksi\LaravelRequestMapper\RequestData\HeaderRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\HeaderRequestData;
+use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class HeaderRequestDataStub
  *
+ * @Type(type="annotation")
  * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub
  */
 class HeaderRequestDataStub extends HeaderRequestData

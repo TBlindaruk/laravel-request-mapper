@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\MappingStrategies;
+namespace Maksi\LaravelRequestMapper\Filling\Strategies;
 
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
 
 /**
  * Interface StrategyInterface

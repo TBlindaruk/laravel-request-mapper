@@ -3,12 +3,19 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\Reader;
 use Illuminate\Support\ServiceProvider;
-use Maksi\LaravelRequestMapper\MappingStrategies\AllStrategy;
-use Maksi\LaravelRequestMapper\MappingStrategies\HeaderStrategy;
-use Maksi\LaravelRequestMapper\MappingStrategies\JsonStrategy;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\Strategies\AllStrategy;
+use Maksi\LaravelRequestMapper\Filling\Strategies\HeaderStrategy;
+use Maksi\LaravelRequestMapper\Filling\Strategies\JsonStrategy;
+use Maksi\LaravelRequestMapper\Validation\AfterType\Annotation\Validator as AfterAnnotationValidator;
+use Maksi\LaravelRequestMapper\Validation\Annotation\Resolver;
+use Maksi\LaravelRequestMapper\Validation\Annotation\ResolverInterface;
+use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\Validator as BeforeLaravelValidator;
+use Maksi\LaravelRequestMapper\Validation\ValidationProcessor;
 use Symfony\Component\Validator\ContainerConstraintValidatorFactory;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilder;
@@ -16,21 +23,26 @@ use Symfony\Component\Validator\ValidatorBuilder;
 /**
  * Class RequestMapperProvider
  *
- * @package Maksi\RequestMapperL
+ * @package Maksi\LaravelRequestMapper
  */
 class RequestMapperProvider extends ServiceProvider
 {
     /**
-     * @param StrategiesHandler $strategiesHandler
+     * @param ValidationProcessor   $validationProcessor
+     * @param FillingChainProcessor $fillingChainProcessor
      */
-    public function boot(StrategiesHandler $strategiesHandler): void
+    public function boot(ValidationProcessor $validationProcessor, FillingChainProcessor $fillingChainProcessor): void
     {
         AnnotationRegistry::registerLoader('class_exists');
 
-        $strategiesHandler
+        $fillingChainProcessor
             ->addStrategy($this->app->make(AllStrategy::class))
             ->addStrategy($this->app->make(JsonStrategy::class))
             ->addStrategy($this->app->make(HeaderStrategy::class));
+
+        $validationProcessor
+            ->addBeforeFillingHandler($this->app->make(BeforeLaravelValidator::class))
+            ->addAfterFillingHandler($this->app->make(AfterAnnotationValidator::class));
     }
 
     /**
@@ -39,8 +51,14 @@ class RequestMapperProvider extends ServiceProvider
     final public function register(): void
     {
         $this->bindValidatorInterface();
-        $this->singletonHandler();
-        $this->resolveDataTransferObject();
+        $this->bindAnnotationResolverInterface();
+
+        $this->singletonFillingChainProcessor();
+        $this->singletonValidationProcessor();
+
+        $this->contextualBindingForReaderInResolver();
+
+        $this->resolveRequestDataObject();
     }
 
     /**
@@ -59,21 +77,45 @@ class RequestMapperProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function singletonHandler(): void
+    public function bindAnnotationResolverInterface(): void
     {
-        $this->app->singleton(StrategiesHandler::class);
+        $this->app->bind(ResolverInterface::class, Resolver::class);
     }
 
     /**
      * @return void
      */
-    protected function resolveDataTransferObject(): void
+    protected function singletonFillingChainProcessor(): void
+    {
+        $this->app->singleton(FillingChainProcessor::class);
+    }
+
+    /**
+     * @return void
+     */
+    private function singletonValidationProcessor(): void
+    {
+        $this->app->singleton(ValidationProcessor::class);
+    }
+
+    /**
+     * @return void
+     */
+    protected function contextualBindingForReaderInResolver(): void
+    {
+        $this->app->when(Resolver::class)->needs(Reader::class)->give(AnnotationReader::class);
+    }
+
+    /**
+     * @return void
+     */
+    protected function resolveRequestDataObject(): void
     {
         $this->app->resolving(function ($object) {
             if ($object instanceof RequestData) {
-                /** @var Resolver $resolver */
-                $resolver = $this->app->make(Resolver::class);
-                $resolver->resolve($object);
+                /** @var FillingChainProcessor $fillingChainProcessor */
+                $fillingChainProcessor = $this->app->make(FillingChainProcessor::class);
+                $fillingChainProcessor->handle($object);
             }
 
             return $object;

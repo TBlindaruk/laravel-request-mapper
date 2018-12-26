@@ -37,7 +37,7 @@ The package will automatically register itself.
 <?php
 declare(strict_types = 1);
 
-use Maksi\LaravelRequestMapper\RequestData\AllRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\AllRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class RoomSearchRequestData extends AllRequestData
@@ -104,7 +104,7 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub\NestedRequestData;
 
-use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RootRequestDataStub extends JsonRequestData
@@ -150,7 +150,7 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub\NestedRequestData;
 
-use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class NestedRequestDataStub extends JsonRequestData
@@ -193,8 +193,8 @@ namespace App\Http\RequestDataStrategy;
 
 use App\Http\RequestData\TeacherSearchRequestData;
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\MappingStrategies\StrategyInterface;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\Strategies\StrategyInterface;
+use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
 
 class TeacherSearchStrategy implements StrategyInterface
 {
@@ -236,7 +236,7 @@ declare(strict_types = 1);
 namespace App\Http\RequestData;
 
 use App\Domain\Teacher\Search\TeacherSearchCriteriaInterface;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class TeacherSearchRequestData extends RequestData implements TeacherSearchCriteriaInterface
@@ -303,7 +303,7 @@ For example:
 ```PHP
 <?php
 
-class StringException extends \Maksi\LaravelRequestMapper\ValidationException\AbstractException
+class StringException extends \Maksi\LaravelRequestMapper\Validation\ResponseException\AbstractException
                                 implements \Illuminate\Contracts\Support\Responsable
 {
     /**
@@ -328,15 +328,15 @@ class StringException extends \Maksi\LaravelRequestMapper\ValidationException\Ab
 declare(strict_types = 1);
 
 return [
-    'exception-class' => \Maksi\LaravelRequestMapper\ValidationException\DefaultException::class,
+    'exception-class' => \Maksi\LaravelRequestMapper\Validation\ResponseException\DefaultException::class,
 ];
 
 ```
 
 <a name="todo"> <h2>7. TODO </h2> </a>
 
+- [x] add possibility to switch validation between `laravel` and `symfony`
 - [ ] add integration tests for `change exception`
 - [ ] add priority to the strategies
 - [ ] how you can get this DTO from the middleware (should it be singleton?)
-- [ ] add possibility to switch validation between `laravel` and `symfony`
 - [ ] add codecov separate for `unit` and `integration` tests

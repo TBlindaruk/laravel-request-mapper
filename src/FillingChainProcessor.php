@@ -5,20 +5,27 @@ namespace Maksi\LaravelRequestMapper;
 
 use Illuminate\Http\Request;
 use Maksi\LaravelRequestMapper\Exception\HandlerNotFoundException;
-use Maksi\LaravelRequestMapper\MappingStrategies\StrategyInterface;
-use Maksi\LaravelRequestMapper\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
+use Maksi\LaravelRequestMapper\Filling\Strategies\StrategyInterface;
+use Maksi\LaravelRequestMapper\Validation\Data\ValidateData;
+use Maksi\LaravelRequestMapper\Validation\ValidationProcessor;
 
 /**
- * Class StrategiesHandler
+ * Class FillingChainProcessor
  *
  * @package Maksi\LaravelRequestMapper
  */
-class StrategiesHandler
+class FillingChainProcessor
 {
     /**
      * @var Request
      */
     private $request;
+
+    /**
+     * @var ValidationProcessor
+     */
+    private $validationHandler;
 
     /**
      * @var array|StrategyInterface[]
@@ -28,11 +35,13 @@ class StrategiesHandler
     /**
      * StrategiesHandler constructor.
      *
-     * @param Request $request
+     * @param Request             $request
+     * @param ValidationProcessor $validationHandler
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, ValidationProcessor $validationHandler)
     {
         $this->request = $request;
+        $this->validationHandler = $validationHandler;
     }
 
     /**
@@ -48,20 +57,24 @@ class StrategiesHandler
     }
 
     /**
+     * TODO: unit tests
+     *
      * @param RequestData $object
+     *
+     * @throws \Maksi\LaravelRequestMapper\Validation\ResponseException\AbstractException
      */
     public function handle(RequestData $object): void
     {
-        // TODO: add unit test
         foreach ($this->strategies as $strategy) {
             if ($strategy->support($this->request, $object)) {
                 $data = $strategy->resolve($this->request);
+                $this->validationHandler->validateBeforeFilling(new ValidateData($object, $data));
                 $object->__construct($data);
+                $this->validationHandler->validateAfterFilling(new ValidateData($object, $data));
 
                 return;
             }
         }
-        // TODO: end unit test
 
         throw new HandlerNotFoundException(
             sprintf('no handler found for %s class', \get_class($object))

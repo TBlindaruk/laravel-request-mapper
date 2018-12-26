@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\ValidationException;
+namespace Maksi\LaravelRequestMapper\Validation\ResponseException;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 /**
  * Class StringResponsableException
  *
- * @package Maksi\LaravelRequestMapper\ValidationException
+ * @package Maksi\LaravelRequestMapper\Validation\ResponseException
  */
 class StringResponsableException extends AbstractException implements Responsable
 {

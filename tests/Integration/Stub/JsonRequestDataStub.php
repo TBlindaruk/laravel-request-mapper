@@ -3,12 +3,14 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub;
 
-use Maksi\LaravelRequestMapper\RequestData\JsonRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
+use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class JsonRequestDataStub
  *
+ * @Type(type="annotation")
  * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub
  */
 class JsonRequestDataStub extends JsonRequestData

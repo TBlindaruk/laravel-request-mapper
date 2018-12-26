@@ -5,7 +5,7 @@ namespace Maksi\LaravelRequestMapper\Tests\Unit\ValidationException;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\ValidationException\JsonResponsableException;
+use Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException;
 use PHPUnit\Framework\TestCase;
 
 /**
