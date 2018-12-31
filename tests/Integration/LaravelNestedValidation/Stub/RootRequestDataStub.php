@@ -1,29 +1,20 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub\NestedRequestData;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
-use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
-use Symfony\Component\Validator\Constraints as Assert;
+use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\ClassAnnotation;
 
 /**
  * Class RootRequestDataStub
- *
- * @Type(type="annotation")
- * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub\NestedRequestData
+ * @ClassAnnotation(class="\Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub\InputValidator")
+ * @package Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub
  */
 class RootRequestDataStub extends JsonRequestData
 {
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Type(type="string")
-     */
     private $title;
 
-    /**
-     * @Assert\Valid()
-     */
     private $nested;
 
     /**

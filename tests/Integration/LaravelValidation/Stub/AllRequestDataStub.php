@@ -1,16 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub\Laravel;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\AllRequestData;
 use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\ClassAnnotation;
 
 /**
  * Class AllRequestDataStub
- *
- * @ClassAnnotation(class="\Maksi\LaravelRequestMapper\Tests\Integration\Stub\Laravel\InputValidator")
- * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub
+ * @ClassAnnotation(class="\Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation\Stub\InputValidator")
+ * @package Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation\Stub
  */
 class AllRequestDataStub extends AllRequestData
 {

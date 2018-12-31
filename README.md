@@ -102,7 +102,7 @@ In the same way you can create an nested DTO object, <strong> for example: </str
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub\NestedRequestData;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\AnnotationNestedValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -148,7 +148,7 @@ class RootRequestDataStub extends JsonRequestData
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub\NestedRequestData;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\AnnotationNestedValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -339,4 +339,3 @@ return [
 - [ ] add integration tests for `change exception`
 - [ ] add priority to the strategies
 - [ ] how you can get this DTO from the middleware (should it be singleton?)
-- [ ] add codecov separate for `unit` and `integration` tests

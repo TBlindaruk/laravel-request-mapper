@@ -57,11 +57,9 @@ class FillingChainProcessor
     }
 
     /**
-     * TODO: unit tests
-     *
      * @param RequestData $object
      *
-     * @throws \Maksi\LaravelRequestMapper\Validation\ResponseException\AbstractException
+     * @throws Validation\ResponseException\AbstractException
      */
     public function handle(RequestData $object): void
     {

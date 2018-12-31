@@ -1,28 +1,28 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub;
+namespace Maksi\LaravelRequestMapper\Tests\Unit\Stub;
 
-use Maksi\LaravelRequestMapper\Filling\RequestData\HeaderRequestData;
+use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
 use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class HeaderRequestDataStub
+ * Class JsonRequestDataStub
  *
  * @Type(type="annotation")
- * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub
+ * @package Maksi\LaravelRequestMapper\Tests\Unit\Stub
  */
-class HeaderRequestDataStub extends HeaderRequestData
+class JsonRequestDataStub extends JsonRequestData
 {
     /**
-     * @Assert\Type(type="array")
+     * @Assert\Type(type="int")
      * @Assert\NotBlank()
      */
     private $age;
 
     /**
-     * @var array
+     * @var string
      * @Assert\NotBlank()
      */
     private $title;
@@ -37,17 +37,17 @@ class HeaderRequestDataStub extends HeaderRequestData
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getTitle(): array
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function getAge(): array
+    public function getAge(): int
     {
         return $this->age;
     }

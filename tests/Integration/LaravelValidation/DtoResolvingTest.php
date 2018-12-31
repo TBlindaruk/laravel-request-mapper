@@ -1,17 +1,19 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Integration;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation;
 
 use Illuminate\Http\Request;
-use Maksi\LaravelRequestMapper\Tests\Integration\Stub\Laravel\AllRequestDataStub;
+use Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation\Stub\AllRequestDataStub;
+use Maksi\LaravelRequestMapper\Tests\Integration\TestCase;
+use Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException;
 
 /**
  * Class DtoResolvingTest
  *
- * @package Maksi\LaravelRequestMapper\Tests\Integration
+ * @package Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation
  */
-class LaravelValidationTest extends TestCase
+class DtoResolvingTest extends TestCase
 {
     public function testAllRequestData(): void
     {
@@ -30,8 +32,29 @@ class LaravelValidationTest extends TestCase
     public function testInvalidAllRequestData(): void
     {
         $this->modifyJsonRequest();
-        /** @var AllRequestDataStub $dto */
+
         $this->app->make(AllRequestDataStub::class);
+    }
+
+    public function testInvalidHeaderDataException(): void
+    {
+        $this->modifyJsonRequest();
+        try {
+            $this->app->make(AllRequestDataStub::class);
+        } catch (JsonResponsableException $jsonResponsableException) {
+            $this->assertValidationResponseValidation($jsonResponsableException, [
+                'errors' => [
+                    [
+                        'message' => 'The age field is required.',
+                        'property' => 'age',
+                    ],
+                    [
+                        'message' => 'The title field is required.',
+                        'property' => 'title',
+                    ],
+                ],
+            ], 422);
+        }
     }
 
 
