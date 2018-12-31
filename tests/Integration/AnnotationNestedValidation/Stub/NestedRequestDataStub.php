@@ -4,13 +4,11 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Tests\Integration\AnnotationNestedValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
-use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class NestedRequestDataStub
  *
- * @Type(type="annotation")
  * @package Maksi\LaravelRequestMapper\Tests\Integration\AnnotationNestedValidation\Stub
  */
 class NestedRequestDataStub extends JsonRequestData

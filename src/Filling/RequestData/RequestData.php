@@ -3,9 +3,6 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Filling\RequestData;
 
-use BadMethodCallException;
-use ReflectionClass;
-
 /**
  * Class RequestData
  *

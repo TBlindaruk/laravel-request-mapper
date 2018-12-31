@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel;
 
 /**
- * Class AbstractInputValidation
+ * Class AbstractValidationRule
  *
  * @package Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel
  */
