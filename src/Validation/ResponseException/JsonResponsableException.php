@@ -28,7 +28,6 @@ class JsonResponsableException extends AbstractException implements Responsable
         $errors = $this->errorCollection ? $this->errorCollection->all() : [];
 
         foreach ($errors as $value) {
-            // TODO: Add tests for this lines (inside loop)
             $localResult = [];
             $localResult['message'] = $value->getMessage();
             $localResult['property'] = $value->getProperty();

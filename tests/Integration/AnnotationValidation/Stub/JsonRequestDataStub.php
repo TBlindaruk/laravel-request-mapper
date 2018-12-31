@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Tests\Integration\Stub;
+namespace Maksi\LaravelRequestMapper\Tests\Integration\AnnotationValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
 use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class JsonRequestDataStub
  *
  * @Type(type="annotation")
- * @package Maksi\LaravelRequestMapper\Tests\Integration\Stub
+ * @package Maksi\LaravelRequestMapper\Tests\Integration\AnnotationValidation\Stub
  */
 class JsonRequestDataStub extends JsonRequestData
 {
@@ -19,36 +19,36 @@ class JsonRequestDataStub extends JsonRequestData
      * @Assert\Type(type="int")
      * @Assert\NotBlank()
      */
-    private $age;
+    private $jsonAge;
 
     /**
      * @var string
      * @Assert\NotBlank()
      */
-    private $title;
+    private $jsonTitle;
 
     /**
      * @param array $data
      */
     protected function init(array $data): void
     {
-        $this->age = $data['age'] ?? null;
-        $this->title = $data['title'] ?? null;
+        $this->jsonAge = $data['age'] ?? null;
+        $this->jsonTitle = $data['title'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getJsonTitle(): string
     {
-        return $this->title;
+        return $this->jsonTitle;
     }
 
     /**
      * @return int
      */
-    public function getAge(): int
+    public function getJsonAge(): int
     {
-        return $this->age;
+        return $this->jsonAge;
     }
 }

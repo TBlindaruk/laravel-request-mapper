@@ -10,8 +10,6 @@ use Maksi\LaravelRequestMapper\Validation\ResponseException\AbstractException;
 use Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException;
 
 /**
- * TODO: add unit tests
- *
  * Class ValidationProcessor
  *
  * @package Maksi\LaravelRequestMapper\Validation
@@ -101,6 +99,7 @@ class ValidationProcessor
             $class = new $className;
         }
 
+        // TODO: add unit tests
         if (!$class instanceof AbstractException) {
             throw  new LogicException('$class should be instance of ' . AbstractException::class);
         }
