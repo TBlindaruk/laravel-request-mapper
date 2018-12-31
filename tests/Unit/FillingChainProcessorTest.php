@@ -25,9 +25,6 @@ class FillingChainProcessorTest extends TestCase
     public function setUp(): void
     {
         $this->validationProcessor = parent::getMockBuilder(ValidationProcessor::class)
-            ->disableOriginalClone()
-            ->disableArgumentCloning()
-            ->disallowMockingUnknownTypes()
             ->disableOriginalConstructor()
             ->getMock();
     }
