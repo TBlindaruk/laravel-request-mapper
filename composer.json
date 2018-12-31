@@ -6,6 +6,12 @@
       "email": "t.blindaruk@gmail.com"
     }
   ],
+  "keywords": [
+    "laravel",
+    "DTO",
+    "request-mapper",
+    "mapper"
+  ],
   "license": "MIT",
   "require": {
     "doctrine/annotations": "^1.6",
