@@ -6,11 +6,11 @@ namespace Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel;
 use Illuminate\Contracts\Container\Container;
 
 /**
- * Class InputValidationFactory
+ * Class ValidationRuleFactory
  *
  * @package Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel
  */
-class InputValidationFactory
+class ValidationRuleFactory
 {
     /**
      * @var Container
@@ -30,15 +30,14 @@ class InputValidationFactory
     /**
      * @param string $inputValidation
      *
-     * @return InputValidationInterface
+     * @return ValidationRuleInterface
      */
-    public function make(string $inputValidation): InputValidationInterface
+    public function make(string $inputValidation): ValidationRuleInterface
     {
         $object = $this->container->make($inputValidation);
 
-        if (!$object instanceof InputValidationInterface) {
-            //TODO: change exception
-            throw new \InvalidArgumentException();
+        if (!$object instanceof ValidationRuleInterface) {
+            throw new ValidationRuleTypeException('$object should be instance of ' . ValidationRuleInterface::class);
         }
 
         return $object;

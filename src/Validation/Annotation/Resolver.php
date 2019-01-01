@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Validation\Annotation;
 
 use Doctrine\Common\Annotations\Reader;
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\ClassAnnotation;
+use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\Annotation\ValidationClass;
 use ReflectionClass;
 
 /**
@@ -95,13 +95,13 @@ class Resolver implements ResolverInterface
      */
     final public function getLaravelValidationClassName($object): ?string
     {
-        /** @var ClassAnnotation|null $annotationClass */
-        $annotationClass = $this->getClassAnnotation(\get_class($object), ClassAnnotation::class);
+        /** @var ValidationClass|null $annotationClass */
+        $annotationClass = $this->getClassAnnotation(\get_class($object), ValidationClass::class);
         if (null === $annotationClass) {
             return null;
         }
 
-        return $annotationClass->getClass();
+        return $annotationClass->class;
     }
 
     /**

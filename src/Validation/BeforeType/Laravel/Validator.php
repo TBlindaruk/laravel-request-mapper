@@ -29,25 +29,25 @@ class Validator implements ValidatorInterface
     private $validationFactory;
 
     /**
-     * @var InputValidationFactory
+     * @var ValidationRuleFactory
      */
-    private $inputValidationFactory;
+    private $validationRuleFactory;
 
     /**
      * LaravelValidationValidator constructor.
      *
-     * @param ResolverInterface      $resolver
-     * @param ValidationFactory      $validationFactory
-     * @param InputValidationFactory $inputValidationFactory
+     * @param ResolverInterface     $resolver
+     * @param ValidationFactory     $validationFactory
+     * @param ValidationRuleFactory $validationRuleFactory
      */
     public function __construct(
         ResolverInterface $resolver,
         ValidationFactory $validationFactory,
-        InputValidationFactory $inputValidationFactory
+        ValidationRuleFactory $validationRuleFactory
     ) {
         $this->resolver = $resolver;
         $this->validationFactory = $validationFactory;
-        $this->inputValidationFactory = $inputValidationFactory;
+        $this->validationRuleFactory = $validationRuleFactory;
     }
 
     /**
@@ -60,13 +60,13 @@ class Validator implements ValidatorInterface
         $data = $validateData->getFillData();
 
         $validationClassName = $this->resolver->getLaravelValidationClassName($validateData->getObject());
-        $inputValidation = $this->inputValidationFactory->make($validationClassName);
+        $validationRule = $this->validationRuleFactory->make($validationClassName);
 
         $validator = $this->validationFactory->make(
             $data,
-            $inputValidation->rules(),
-            $inputValidation->messages(),
-            $inputValidation->customAttributes()
+            $validationRule->rules(),
+            $validationRule->messages(),
+            $validationRule->customAttributes()
         );
 
         $errorCollection = new ErrorCollection();

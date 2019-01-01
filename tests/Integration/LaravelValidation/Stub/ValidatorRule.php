@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation\Stub;
 
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\AbstractInputValidation;
+use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\AbstractValidationRule;
 
 /**
- * Class InputValidator
+ * Class ValidatorRule
  *
  * @package Maksi\LaravelRequestMapper\Tests\Integration\LaravelValidation\Stub
  */
-class InputValidator extends AbstractInputValidation
+class ValidatorRule extends AbstractValidationRule
 {
     /**
      * @return array

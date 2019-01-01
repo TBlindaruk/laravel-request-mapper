@@ -3,41 +3,26 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Validation\Annotation;
 
+use Doctrine\Common\Annotations\Annotation\Enum;
+use Doctrine\Common\Annotations\Annotation\Required;
+
 /**
  * Class Type
  *
  * @package Maksi\LaravelRequestMapper\Validation\Annotation
  * @Annotation
+ * @Target({"CLASS"})
  */
 final class Type
 {
     /**
-     * @var string
+     * @Enum({"laravel", "annotation"})
+     * @Required()
      */
-    private $type;
+    public $type;
 
     private const LARAVEL = 'laravel';
     private const ANNOTATION = 'annotation';
-
-    private const ALLOWED_VALUES = [
-        self::ANNOTATION,
-        self::LARAVEL,
-    ];
-
-    /**
-     * Type constructor.
-     *
-     * @param array $options
-     */
-    public function __construct(array $options)
-    {
-        $type = $options['type'] ?? null;
-        if (!\in_array($type, self::ALLOWED_VALUES, true)) {
-            throw new \InvalidArgumentException('Property "type" is required and should be "annotation" or "laravel"');
-        }
-
-        $this->type = $type;
-    }
 
     /**
      * @return bool

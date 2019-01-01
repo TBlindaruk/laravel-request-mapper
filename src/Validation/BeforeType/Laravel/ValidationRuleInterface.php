@@ -4,25 +4,24 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel;
 
 /**
- * Class AbstractInputValidation
+ * Interface ValidationRuleInterface
  *
  * @package Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel
  */
-abstract class AbstractInputValidation implements InputValidationInterface
+interface ValidationRuleInterface
 {
     /**
      * @return array
      */
-    public function messages(): array
-    {
-        return [];
-    }
+    public function rules(): array;
 
     /**
      * @return array
      */
-    public function customAttributes(): array
-    {
-        return [];
-    }
+    public function messages(): array;
+
+    /**
+     * @return array
+     */
+    public function customAttributes(): array;
 }
