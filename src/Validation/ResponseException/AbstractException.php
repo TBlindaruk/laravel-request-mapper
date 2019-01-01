@@ -19,12 +19,18 @@ abstract class AbstractException extends Exception
     protected $errorCollection;
 
     /**
-     * TODO: delete error, should be just an constructor.
-     *
      * @param ErrorCollection $errorCollection
      */
     final public function setErrorCollection(ErrorCollection $errorCollection): void
     {
         $this->errorCollection = $errorCollection;
+    }
+
+    /**
+     * @return ErrorCollection|null
+     */
+    final public function getErrorCollection(): ?ErrorCollection
+    {
+        return $this->errorCollection;
     }
 }
