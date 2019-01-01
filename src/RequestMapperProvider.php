@@ -27,12 +27,12 @@ use Symfony\Component\Validator\ValidatorBuilder;
  */
 class RequestMapperProvider extends ServiceProvider
 {
-    /**
-     * @param ValidationProcessor   $validationProcessor
-     * @param FillingChainProcessor $fillingChainProcessor
-     */
-    public function boot(ValidationProcessor $validationProcessor, FillingChainProcessor $fillingChainProcessor): void
+    public function boot(): void
     {
+        /** @var ValidationProcessor $validationProcessor */
+        $validationProcessor = $this->app->make(ValidationProcessor::class);
+        /** @var FillingChainProcessor $fillingChainProcessor */
+        $fillingChainProcessor = $this->app->make(FillingChainProcessor::class);
         AnnotationRegistry::registerLoader('class_exists');
 
         $fillingChainProcessor
