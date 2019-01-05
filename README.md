@@ -17,7 +17,9 @@ This component allow you to inject DTO object mapped from the Request to the act
 6. [Create custom mapped strategy](#custom-mapped-strategy)
 7. [How to create an custom exception?](#change-exception)
 8. [Project example](#example)
-9. [TODO](#todo)
+9. [Contributing](#contributing)
+10. [Licence](#licence)
+11. [TODO](#todo)
 
 <a name="install"> <h2>1. Install </h2> </a>
 
@@ -496,7 +498,15 @@ return [
 
 You can see example of usage part of this package in https://github.com/E-ZSTU/rozklad-rest-api project. 
 
-<a name="todo"> <h2>9. TODO </h2> </a>
+<a name="contributing"> <h2> Contributing </h2> </a>
+
+Please see [CONTRIBUTING](./CONTRIBUTING.md) for details.
+
+<a name="license"> <h2> License </h2> </a>
+
+The MIT License (MIT). Please see [License](./LICENSE) File for more information.
+
+<a name="todo"> <h2>TODO </h2> </a>
 
 - [ ] add integration tests for `change exception`
 - [ ] add priority to the strategies
