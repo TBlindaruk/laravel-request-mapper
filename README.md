@@ -508,6 +508,9 @@ The MIT License (MIT). Please see [License](./LICENSE) File for more information
 
 <a name="todo"> <h2>TODO </h2> </a>
 
+- [ ] think about https://www.reddit.com/r/laravel/comments/af843q/laravel_request_mapper/edx39cj
+- [ ] think about https://www.reddit.com/r/laravel/comments/af843q/laravel_request_mapper/edx8mci
+- [ ] delete symfony validation, since I`m not sure that is needed for the laravel community
 - [ ] add integration tests for `change exception`
 - [ ] add priority to the strategies
 - [ ] how you can get this DTO from the middleware (just register `RequestData` as a singleton)
