@@ -1,14 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel;
+namespace Maksi\LaravelRequestMapper\Validation\LaravelValidator;
 
 use Illuminate\Contracts\Container\Container;
 
 /**
  * Class ValidationRuleFactory
  *
- * @package Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel
+ * @package Maksi\LaravelRequestMapper\Validation\LaravelValidator
  */
 class ValidationRuleFactory
 {

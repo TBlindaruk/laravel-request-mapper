@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel;
+namespace Maksi\LaravelRequestMapper\Validation\LaravelValidator;
 
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Validation\ValidationException;
@@ -14,7 +14,7 @@ use Maksi\LaravelRequestMapper\Validation\ValidatorInterface;
 /**
  * Class Validator
  *
- * @package Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel
+ * @package Maksi\LaravelRequestMapper\Validation\LaravelValidator
  */
 class Validator implements ValidatorInterface
 {
@@ -91,14 +91,8 @@ class Validator implements ValidatorInterface
      */
     public function support(ValidateData $validateData): bool
     {
-        $object = $validateData->getObject();
+        $validationClass = $this->resolver->getLaravelValidationClassName($validateData->getObject());
 
-        if ($this->resolver->isNoValidationTypeDetermined($object)) {
-            $validationClass = $this->resolver->getLaravelValidationClassName($object);
-
-            return null !== $validationClass;
-        }
-
-        return $this->resolver->isLaravelValidation($object);
+        return null !== $validationClass;
     }
 }

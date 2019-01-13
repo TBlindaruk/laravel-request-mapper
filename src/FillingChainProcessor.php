@@ -68,7 +68,6 @@ class FillingChainProcessor
                 $data = $strategy->resolve($this->request);
                 $this->validationHandler->validateBeforeFilling(new ValidateData($object, $data));
                 $object->__construct($data);
-                $this->validationHandler->validateAfterFilling(new ValidateData($object, $data));
 
                 return;
             }

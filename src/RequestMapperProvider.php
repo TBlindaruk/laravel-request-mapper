@@ -11,10 +11,9 @@ use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
 use Maksi\LaravelRequestMapper\Filling\Strategies\AllStrategy;
 use Maksi\LaravelRequestMapper\Filling\Strategies\HeaderStrategy;
 use Maksi\LaravelRequestMapper\Filling\Strategies\JsonStrategy;
-use Maksi\LaravelRequestMapper\Validation\AfterType\Annotation\Validator as AfterAnnotationValidator;
 use Maksi\LaravelRequestMapper\Validation\Annotation\Resolver;
 use Maksi\LaravelRequestMapper\Validation\Annotation\ResolverInterface;
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\Validator as BeforeLaravelValidator;
+use Maksi\LaravelRequestMapper\Validation\LaravelValidator\Validator as BeforeLaravelValidator;
 use Maksi\LaravelRequestMapper\Validation\ValidationProcessor;
 use Symfony\Component\Validator\ContainerConstraintValidatorFactory;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -41,8 +40,7 @@ class RequestMapperProvider extends ServiceProvider
             ->addStrategy($this->app->make(HeaderStrategy::class));
 
         $validationProcessor
-            ->addBeforeFillingHandler($this->app->make(BeforeLaravelValidator::class))
-            ->addAfterFillingHandler($this->app->make(AfterAnnotationValidator::class));
+            ->addBeforeFillingHandler($this->app->make(BeforeLaravelValidator::class));
     }
 
     /**

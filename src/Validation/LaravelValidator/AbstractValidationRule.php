@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel;
+namespace Maksi\LaravelRequestMapper\Validation\LaravelValidator;
 
 /**
  * Class AbstractValidationRule
  *
- * @package Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel
+ * @package Maksi\LaravelRequestMapper\Validation\LaravelValidator
  */
 abstract class AbstractValidationRule implements ValidationRuleInterface
 {

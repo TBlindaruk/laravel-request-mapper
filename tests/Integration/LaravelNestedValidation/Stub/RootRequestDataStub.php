@@ -4,11 +4,11 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\Annotation\ValidationClass;
+use Maksi\LaravelRequestMapper\Validation\Annotation\ValidationRules;
 
 /**
  * Class RootRequestDataStub
- * @ValidationClass(class="\Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub\ValidatorRule")
+ * @ValidationRules(class="\Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub\ValidatorRule")
  * @package Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub
  */
 class RootRequestDataStub extends JsonRequestData

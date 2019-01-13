@@ -96,13 +96,12 @@ class RoomSearchController
 
 You can apply validation to the DTO object:
 - before mapping data to the DTO (`laravel` validation)
-- after mapping data to the DTO (`symfony annotation` validation)
 
 <strong>3.3.1 Apply laravel validation </strong>
 
 <i> Laravel validation applied for the `RequestData` object before object filling. </i> 
 
-1. You should create a class with validation rules. This class should implement `Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\ValidationRuleInterface` interface (in case, if you do no need change the validation `messages` and `customAttributes`, than you can extend `Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\AbstractValidationRule` class)
+1. You should create a class with validation rules. This class should implement `Maksi\LaravelRequestMapper\Validation\LaravelValidator\ValidationRuleInterface` interface (in case, if you do no need change the validation `messages` and `customAttributes`, than you can extend `Maksi\LaravelRequestMapper\Validation\LaravelValidator\AbstractValidationRule` class)
 
 ```PHP
 <?php
@@ -110,7 +109,7 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub;
 
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\AbstractValidationRule;
+use Maksi\LaravelRequestMapper\Validation\LaravelValidator\AbstractValidationRule;
 
 class ValidatorRule extends AbstractValidationRule
 {
@@ -134,7 +133,7 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\Annotation\ValidationClass;
+use Maksi\LaravelRequestMapper\Validation\LaravelValidator\Annotation\ValidationClass;
 
 /**
  * @ValidationClass(class="\Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub\ValidatorRule")
@@ -172,149 +171,15 @@ string
 
 indicates that <string>before</string> filling current DTO should be appied `\Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub\ValidatorRule` rules for the `data` which will be injected to the dto.
 
-<strong>3.3.2 Apply symfony annotation validation </strong>
-
-Annotation symfony validation applied to the properties in the `RequestData` object (So this validation appied after the creating and DTO object).
-
-At the first you should add the `@Type(type="annotation")` annotation to the RequestData object. After this you can apply the validation to the DTO object (for more information please see symfony [validation documentation](https://symfony.com/doc/current/validation.html))
-
-```PHP
-<?php
-declare(strict_types = 1);
-
-namespace Maksi\LaravelRequestMapper\Tests\Integration\AnnotationValidation\Stub;
-
-use Maksi\LaravelRequestMapper\Filling\RequestData\AllRequestData;
-use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
-use Symfony\Component\Validator\Constraints as Assert;
-
-/**
- * @Type(type="annotation")
- */
-class AllRequestDataStub extends AllRequestData
-{
-    /**
-     * @Assert\Type(type="int")
-     * @Assert\NotBlank()
-     */
-    private $allAge;
-
-    /**
-     * @var string
-     * @Assert\NotBlank()
-     */
-    private $allTitle;
-
-    protected function init(array $data): void
-    {
-        $this->allAge = $data['age'] ?? null;
-        $this->allTitle = $data['title'] ?? null;
-    }
-
-    public function getAllTitle(): string
-    {
-        return $this->allTitle;
-    }
-
-    public function getAllAge(): int
-    {
-        return $this->allAge;
-    }
-}
-
-```
-
 <a name="nested"> <h2>4. Nested object validation </h2> </a>
 
-<strong> 4.1. Symfony annotation validation</strong>
-
-In the same way you can create an nested DTO object, <strong> for example: </strong>
-
-<p align="center"><i>Root class</i></p>
-
-```PHP
-<?php
-declare(strict_types = 1);
-
-namespace Maksi\LaravelRequestMapper\Tests\Integration\AnnotationNestedValidation\Stub;
-
-use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
-use Maksi\LaravelRequestMapper\Validation\Annotation\Type;
-use Symfony\Component\Validator\Constraints as Assert;
-
-/**
- * @Type(type="annotation")
- */
-class RootRequestDataStub extends JsonRequestData
-{
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Type(type="string")
-     */
-    private $title;
-
-    /**
-     * @Assert\Valid()
-     */
-    private $nested; // this property should have `Valid` annotation for validate nested object
-
-    protected function init(array $data): void
-    {
-        $this->title = $data['title'] ?? null;
-        $this->nested = new NestedRequestDataStub($data['nested'] ?? []);
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function getNested(): NestedRequestDataStub
-    {
-        return $this->nested;
-    }
-}
-```
-
-<p align="center"><i>Nested class</i></p>
-
-```PHP
-<?php
-declare(strict_types = 1);
-
-namespace Maksi\LaravelRequestMapper\Tests\Integration\AnnotationNestedValidation\Stub;
-
-use Maksi\LaravelRequestMapper\Filling\RequestData\JsonRequestData;
-use Symfony\Component\Validator\Constraints as Assert;
-
-class NestedRequestDataStub extends JsonRequestData
-{
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Type(type="string")
-     */
-    private $nestedTitle;
-
-    protected function init(array $data): void
-    {
-        $this->nestedTitle = $data['title'] ?? null;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->nestedTitle;
-    }
-}
-
-```
-
-<strong> 4.2. Laravel validation for nested</strong>
+<strong> 4.1. Laravel validation for nested</strong>
 
 So, as a laravel validation applied before filling the `RequestData` object, than you should just create the same validation class as an for no nested validation.
 
 ```PHP
 <?php
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\AbstractValidationRule;
+use Maksi\LaravelRequestMapper\Validation\LaravelValidator\AbstractValidationRule;
 
 class ValidatorRule extends AbstractValidationRule
 {
@@ -398,16 +263,9 @@ declare(strict_types = 1);
 namespace App\Http\RequestData;
 
 use Maksi\LaravelRequestMapper\Filling\RequestData\RequestData;
-use Symfony\Component\Validator\Constraints as Assert;
 
 final class TeacherSearchRequestData extends RequestData
 {
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @Assert\Type(type="string")
-     */
     private $name;
 
     protected function init(array $data): void
@@ -510,7 +368,6 @@ The MIT License (MIT). Please see [License](./LICENSE) File for more information
 
 - [x] think about https://www.reddit.com/r/laravel/comments/af843q/laravel_request_mapper/edx39cj
 - [ ] think about https://www.reddit.com/r/laravel/comments/af843q/laravel_request_mapper/edx8mci
-- [ ] delete symfony validation, since I`m not sure that is needed for the laravel community
 - [ ] add integration tests for `change exception`
 - [ ] add priority to the strategies
 - [ ] how you can get this DTO from the middleware (just register `RequestData` as a singleton)

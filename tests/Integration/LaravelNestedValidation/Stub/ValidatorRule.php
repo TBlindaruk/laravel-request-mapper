@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Maksi\LaravelRequestMapper\Tests\Integration\LaravelNestedValidation\Stub;
 
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\AbstractValidationRule;
+use Maksi\LaravelRequestMapper\Validation\LaravelValidator\AbstractValidationRule;
 
 /**
  * Class ValidatorRule

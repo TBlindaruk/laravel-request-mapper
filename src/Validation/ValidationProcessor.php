@@ -29,11 +29,6 @@ class ValidationProcessor
     private $beforeHandlers = [];
 
     /**
-     * @var ValidatorInterface[]
-     */
-    private $afterHandlers = [];
-
-    /**
      * ValidationProcessor constructor.
      *
      * @param Config $config
@@ -56,18 +51,6 @@ class ValidationProcessor
     }
 
     /**
-     * @param ValidatorInterface $handler
-     *
-     * @return ValidationProcessor
-     */
-    public function addAfterFillingHandler(ValidatorInterface $handler): self
-    {
-        $this->afterHandlers[] = $handler;
-
-        return $this;
-    }
-
-    /**
      * @param ValidateData $data
      *
      * @throws AbstractException
@@ -75,16 +58,6 @@ class ValidationProcessor
     public function validateBeforeFilling(ValidateData $data): void
     {
         $this->runValidateHandlers($this->beforeHandlers, $data);
-    }
-
-    /**
-     * @param ValidateData $data
-     *
-     * @throws AbstractException
-     */
-    public function validateAfterFilling(ValidateData $data): void
-    {
-        $this->runValidateHandlers($this->afterHandlers, $data);
     }
 
     /**

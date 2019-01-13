@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Validation\Annotation;
 
 use Doctrine\Common\Annotations\Reader;
-use Maksi\LaravelRequestMapper\Validation\BeforeType\Laravel\Annotation\ValidationClass;
 use ReflectionClass;
 
 /**
@@ -40,54 +39,6 @@ class Resolver implements ResolverInterface
     }
 
     /**
-     * @param object $object
-     *
-     * @return bool
-     * @throws \ReflectionException
-     */
-    final public function isNoValidationTypeDetermined($object): bool
-    {
-        /** @var Type|null $annotationClass */
-        $annotationClass = $this->getClassAnnotation(\get_class($object), Type::class);
-
-        return null === $annotationClass;
-    }
-
-    /**
-     * @param $object
-     *
-     * @return bool
-     * @throws \ReflectionException
-     */
-    final public function isLaravelValidation($object): bool
-    {
-        /** @var Type|null $annotationClass */
-        $annotationClass = $this->getClassAnnotation(\get_class($object), Type::class);
-        if (null === $annotationClass) {
-            return false;
-        }
-
-        return $annotationClass->isLaravel();
-    }
-
-    /**
-     * @param $object
-     *
-     * @return bool
-     * @throws \ReflectionException
-     */
-    final public function isAnnotationValidation($object): bool
-    {
-        /** @var Type|null $annotationClass */
-        $annotationClass = $this->getClassAnnotation(\get_class($object), Type::class);
-        if (null === $annotationClass) {
-            return false;
-        }
-
-        return $annotationClass->isAnnotation();
-    }
-
-    /**
      * @param $object
      *
      * @return null|string
@@ -95,8 +46,8 @@ class Resolver implements ResolverInterface
      */
     final public function getLaravelValidationClassName($object): ?string
     {
-        /** @var ValidationClass|null $annotationClass */
-        $annotationClass = $this->getClassAnnotation(\get_class($object), ValidationClass::class);
+        /** @var ValidationRules|null $annotationClass */
+        $annotationClass = $this->getClassAnnotation(\get_class($object), ValidationRules::class);
         if (null === $annotationClass) {
             return null;
         }
