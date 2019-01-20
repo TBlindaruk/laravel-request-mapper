@@ -339,11 +339,11 @@ By default package has 3 strategies:
 - [HeaderStrategy](./src/Filling/Strategies/HeaderStrategy.php)
 - [JsonStrategy](./src/Filling/Strategies/JsonStrategy.php)
 
-<strong> AllStrategy </strong> - responsible for filling data from the `$request->all()` array. If ou want to use this strategy, than your `RequestData` object should extend `AllRequestData` class.
+<strong> AllStrategy </strong> - responsible for filling data from the `$request->all()` array. If you want to use this strategy, than your `RequestData` object should extend `AllRequestData` class.
 
-<strong> HeaderStrategy </strong> - responsible for filling data from the `$request->header->all()` array. If ou want to use this strategy, than your `RequestData` object should extend `HeaderRequestData` class.
+<strong> HeaderStrategy </strong> - responsible for filling data from the `$request->header->all()` array. If you want to use this strategy, than your `RequestData` object should extend `HeaderRequestData` class.
 
-<strong> JsonStrategy </strong> - responsible for filling data from the `$request->json()->all()` array. If ou want to use this strategy, than your `RequestData` object should extend `JsonRequestData` class.
+<strong> JsonStrategy </strong> - responsible for filling data from the `$request->json()->all()` array. If you want to use this strategy, than your `RequestData` object should extend `JsonRequestData` class.
 
 <a name="custom-mapped-strategy"> <h2>6.  Create custom mapped strategy </h2> </a>
 
