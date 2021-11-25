@@ -29,11 +29,9 @@ class DtoResolvingTest extends TestCase
         $this->assertSame('nested_title', $dto->getNested()->getTitle());
     }
 
-    /**
-     * @expectedException \Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException
-     */
     public function testInvalidNestedRequestData(): void
     {
+        $this->expectException(JsonResponsableException::class);
         /** @var Request $request */
         $request = $this->app->make(Request::class);
         $request->json()->set('title', 'title1');

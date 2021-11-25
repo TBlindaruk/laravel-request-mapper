@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Maksi\LaravelRequestMapper\Tests\Unit;
 
 use Illuminate\Http\Request;
+use Maksi\LaravelRequestMapper\Exception\HandlerNotFoundException;
 use Maksi\LaravelRequestMapper\FillingChainProcessor;
 use Maksi\LaravelRequestMapper\Tests\Unit\Stub\JsonRequestDataStub;
 use Maksi\LaravelRequestMapper\Validation\ValidationProcessor;
@@ -31,11 +32,11 @@ class FillingChainProcessorTest extends TestCase
 
     /**
      * @throws \Maksi\LaravelRequestMapper\Validation\ResponseException\AbstractException
-     * @expectedException \Maksi\LaravelRequestMapper\Exception\HandlerNotFoundException
-     * @expectedExceptionMessage no handler found for Maksi\LaravelRequestMapper\Tests\Unit\Stub\JsonRequestDataStub class
      */
     public function testHandlerNotFoundException():void
     {
+        $this->expectException(HandlerNotFoundException::class);
+        $this->expectExceptionMessage("no handler found for Maksi\LaravelRequestMapper\Tests\Unit\Stub\JsonRequestDataStub class");
         $fillingChainProcessor = $this->createFillingChainProcessor();
         $fillingChainProcessor->handle(new JsonRequestDataStub([]));
     }

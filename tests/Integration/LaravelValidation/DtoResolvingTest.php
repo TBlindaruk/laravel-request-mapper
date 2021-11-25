@@ -26,11 +26,9 @@ class DtoResolvingTest extends TestCase
         $this->assertSame(2, $dto->getAge());
     }
 
-    /**
-     * @expectedException \Maksi\LaravelRequestMapper\Validation\ResponseException\JsonResponsableException
-     */
     public function testInvalidAllRequestData(): void
     {
+        $this->expectException(JsonResponsableException::class);
         $this->modifyJsonRequest();
 
         $this->app->make(AllRequestDataStub::class);
